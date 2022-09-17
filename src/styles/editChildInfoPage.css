@@ -1,0 +1,49 @@
+.editChildInfoPageContainer {
+    padding: 5.19vh 2.57vw;
+}
+.pageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7.33vh;
+}
+.childImageNameContainer {
+    display: flex;
+    align-items: center;
+}
+
+.childImgContainer {
+    width: 11vw;
+    height: 11vw;
+    border-radius: 50%;
+    background-image: url("../assets/sampleBoyImage.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.childName {
+    margin-bottom: 0;
+    margin-left: 45px;
+    font-size: 60px;
+    font-weight: bold;
+    color: #332C8B;
+}
+.childBalanceText {
+    font-size: 80px;
+    margin-left: 14px;
+    font-weight: bold;
+    color: #D69E01;
+}
+
+.inputGroupHeader {
+    font-size: 60px;
+    font-weight: bold;
+    color: red;
+    margin-bottom: 4vh;
+}
+
+.inputLabel {
+    font-size: 40px;
+    font-weight: bold;
+    color: #3D60E8;
+}

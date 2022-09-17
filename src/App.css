@@ -1,7 +1,11 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
+  margin: 0;
 }
-
+body, html {
+  height: 100%;
+  margin: 0;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -13,8 +17,13 @@
   }
 }
 
+.App-description {
+  text-align: left;
+}
+
+
 .App-header {
-  background-color: #282c34;
+  background-color: #332C8B;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

@@ -1,0 +1,26 @@
+.landingPageContainer {
+    width: 100%;
+    height: 100vh;
+    background: url('../assets/LandingPageBackground.png')  no-repeat center center fixed;
+    background-size: 100vw 100vh;
+    overflow: hidden;
+}
+
+
+.titleContainer {
+    padding-top: 6.25vh;
+    padding-left: 70px;
+}
+
+
+.title {
+    font-size: 7.65vw;
+}
+
+.appDescription {
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    margin-top: 13.3vh;
+    line-height: 70px;
+}

@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.buttonText {
+    margin: 0;
+    color: #0E5BA1;
+    font-weight: 600;
+}

@@ -1,0 +1,33 @@
+.mathAdContainer {
+    background-color: #ECAB14;
+    width: 23.14vw;
+    height: 256px;
+    border-radius: 12px;
+    position: relative;
+    padding-left: 1.4vw;
+    padding-top: 1.4vh;
+    padding-bottom: 1.4vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.mathAdText {
+    font-size: 37px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 0;
+    line-height: 50px;
+}
+
+.mathAdImage {
+    position: absolute;
+    bottom: 1vh;
+    right: 0;
+}
+
+.readMoreText {
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 0;
+}

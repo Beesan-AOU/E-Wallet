@@ -1,0 +1,31 @@
+.calenderAdContainer {
+    background-color: #3B85D2;
+    width: 23.14vw;
+    height: 256px;
+    border-radius: 12px;
+    position: relative;
+    padding-left: 1.4vw;
+    padding-top: 1.4vh;
+    padding-bottom: 1.4vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.calenderAdText {
+    font-size: 37px;
+    font-weight: bold;
+    color: white;
+}
+
+.calenderAdImage {
+    position: absolute;
+    bottom: 2vh;
+    right: 0.7vw;
+}
+
+.readMoreText {
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 0;
+}

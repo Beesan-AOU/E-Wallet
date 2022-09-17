@@ -1,0 +1,78 @@
+.cardContentContainer {
+    background-color: #E9E8F2;
+    fill-opacity: 11%;
+    width: 44vw;
+    height: 27.4vh;
+    border-radius: 38px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    align-items: center;
+    padding-left: 2.5vw;
+}
+
+.coinImage {
+    background-image: url("../assets/coinImage.png");
+    background-repeat: no-repeat;
+    background-size: 4vw 4.1vw;
+    width: 4vw;
+    height: 4.1vw;
+    margin-right: 7px;
+}
+
+.childBalanceContainer {
+    display: flex;
+    align-items: center;
+}
+
+
+.cardText {
+    font-size: 60px;
+    font-weight: bold;
+
+}
+
+.childName {
+    color: #332C8B;
+}
+
+.childBalance {
+    color: #D69E01
+}
+
+.childImageContainer {
+    width: 13vw;
+    height: 100%;
+    background-image: url("../assets/sampleBoyImage.png");
+    background-size: cover;
+}
+
+.homeIcon {
+    width: 4.3vw;
+    height: 4.3vw;
+    cursor: pointer;
+}
+
+.childCardContainer {
+    display: flex;
+    margin-bottom: 9.8vh;
+}
+
+.actionButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-left: 1.3vw;
+}
+
+.editIconContainer {
+    background-image: url("../assets/editIcon.png");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.historyIconContainer {
+    background-image: url("../assets/historyIcon.png");
+    background-position: center;
+    background-repeat: no-repeat;
+}
