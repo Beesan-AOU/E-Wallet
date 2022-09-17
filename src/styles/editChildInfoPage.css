@@ -47,3 +47,148 @@
     font-weight: bold;
     color: #3D60E8;
 }
+
+.dropDownMenu {
+    background-color: #F3F8FF;
+    width: 29vw;
+    border: none;
+    font-size: 30px;
+    padding: 16px 26px 16px 26px;
+    border-radius: 13px;
+}
+
+.dropDownMenu:focus {
+    border: none;
+    outline: none;
+}
+
+select option:hover {
+    background-color: #F3F8FF;
+}
+.healthAssetsContainer {
+    width: 65vw;
+}
+
+.schoolAssetsContainer {
+    width: 65vw;
+}
+
+.emergencyContactsContainer {
+    width: 81vw;
+}
+.contactInput {
+    width: 29vw;
+}
+.relationMenu {
+    width: 18.65vw;
+}
+
+
+.contactInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 81vw;
+}
+
+
+.labelInputContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+}
+
+.inputField {
+    background-color: #F3F8FF;
+    width: 29vw;
+    border: none;
+    font-size: 30px;
+    padding: 16px 26px 16px 26px;
+    border-radius: 13px;
+}
+
+.diseaseDropdown {
+    width: 21.8vw;
+}
+
+.diseasesInput {
+    width: 39.3vw;
+}
+
+.checkboxInput {
+    width: 35px;
+    height: 35px;
+}
+
+.allergyContainer {
+    width: 29vw;
+    display: flex;
+    align-items: center;
+}
+
+.checkboxContainer {
+    display: flex;
+    justify-content: center;
+    width: 5.5vw;
+}
+.allergyCardContainer {
+    background-color: #F3F8FF;
+    width: 100%;
+    height: 71px;
+    border-radius: 13px;
+    display: flex;
+}
+
+.allergyIconContainer {
+    width: 8.66vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.allergyText {
+    font-size: 30px;
+    color: #121683;
+    margin-bottom: 0;
+}
+
+.allergyTextContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1
+}
+
+.upperCard {
+    margin-bottom: 4.78vh;
+}
+
+.otherAlergies {
+    width: 8.66vw;
+}
+
+.contactSectionContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.saveButtonContainer {
+    width: 21vw;
+    background-color: #0FB700;
+    text-align: center;
+    border-radius: 13px;
+    padding: 2vh 0;
+}
+
+.saveText {
+    font-size: 35px;
+    color: white;
+    margin-bottom: 0;
+}
+
+.flexButtonContainer {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    margin-top: 7vh;
+}
