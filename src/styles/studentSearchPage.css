@@ -1,0 +1,45 @@
+.studentSearchUpperBgPart {
+    position: absolute;
+
+}
+
+
+.studentSearchLowerBgPart {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.studentSearchPageContainer {
+    min-width: 100vw;
+    height: 100vh;
+    background-color: #332C8B;
+    position: relative;
+    overflow: hidden;
+}
+
+.welcomingImage {
+    scale: 0.7
+}
+
+.FormInputField {
+    background-color: #8484BE;
+    border: none;
+    font-size: 30px;
+    padding: 20px 34px;
+    border-radius: 13px;
+    color: orange;
+    margin-bottom: 4vh;
+    width: 46.3vw;
+}
+
+.searchButton {
+    background-color: white;
+    font-size: 30px;
+    font-weight: 700;
+    color: #3D60E8;
+    padding: 20px 9.5vw;
+    border: none;
+    border-radius: 13px;
+
+}

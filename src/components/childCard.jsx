@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import "../styles/childCard.css"
-function ChildCard() {
+function ChildCard(props) {
+    const { childData } = props;
     return ( 
         <div className="childCardContainer">
         <div className="cardContentContainer">
             <div className="childInfoContainer">
-                <h1 className='childName cardText'>Ali Ahmad</h1>
+                <h1 className='childName cardText'>{childData.name}</h1>
                 <div className="childBalanceContainer">
                     <div className="coinImage"></div>
                     <h1 className='childBalance cardText'>0 SR</h1>
