@@ -28,10 +28,18 @@
     font-size: 30px;
     padding: 20px 34px;
     border-radius: 13px;
-    color: orange;
+    color: white;
     margin-bottom: 4vh;
     width: 46.3vw;
+    position: relative;
+    z-index: 2;
 }
+
+.FormInputField:focus {
+    border: none;
+
+}
+
 
 .searchButton {
     background-color: white;
@@ -41,5 +49,7 @@
     padding: 20px 9.5vw;
     border: none;
     border-radius: 13px;
+    position: relative;
+    z-index: 2;
 
 }
