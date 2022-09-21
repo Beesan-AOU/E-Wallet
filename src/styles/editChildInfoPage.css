@@ -16,9 +16,30 @@
     width: 11vw;
     height: 11vw;
     border-radius: 50%;
-    background-image: url("../assets/sampleBoyImage.png");
-    background-size: cover;
-    background-repeat: no-repeat;
+    overflow: hidden;
+    position: relative;
+}
+
+.imageOverlay {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(55, 55, 55, 0.5);
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+
+.childImage {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 .childName {
@@ -164,7 +185,7 @@ select option:hover {
 }
 
 .otherAlergies {
-    width: 8.66vw;
+    width: 100%;
 }
 
 .contactSectionContainer {
@@ -191,4 +212,31 @@ select option:hover {
     flex: 1;
     justify-content: flex-end;
     margin-top: 7vh;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.measurementInputContainer {
+    position: relative;
+
+}
+
+.measurementUnit {
+    position: absolute;
+    right: 16px;
+    top: 1.62vh;
+    font-size: 30px;
+    color: #121683;
+    margin-bottom: 0;
+}
+
+
+.addBalanceIconButton {
+    cursor: pointer;
+    margin-left: 1.2vw;
 }

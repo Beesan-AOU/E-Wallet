@@ -34,22 +34,20 @@ function ParentHomePage() {
     }
   };
   const fetchChildren = async (childrenArray) => {
-    const tempChildrenArray = [];
+    var tempChildrenArray = [];
     console.log("children " + JSON.stringify(childrenArray));
-    childrenArray.forEach(async (childID) => {
-      const docRef = doc(db, "children", childID);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        console.log("adding" + JSON.stringify(docSnap.data()))
-        setChildren([...tempChildrenArray,docSnap.data()]);
-        console.log("tempChildrenArray after adding" + JSON.stringify(tempChildrenArray))
-      } else {
-        console.log("user data not on database");
-      }
-    });
-    console.log("returned Array" + JSON.stringify(tempChildrenArray));
+    for (let i = 0; i < childrenArray.length; i++) {
+        const childDoc = childrenArray[i];
+        const docSnap = await getDoc(childDoc);
+        if (docSnap.exists()) {
+          tempChildrenArray = [...tempChildrenArray,docSnap.data()];
+          console.log("tempChildrenArray after adding" + JSON.stringify(tempChildrenArray))
+        } else {
+          console.log("user data not on database");
+        }
+        
+    }
     setChildren(tempChildrenArray);
-    //return tempChildrenArray;
   };
   useEffect(() => {
     console.log("hello");
@@ -61,9 +59,9 @@ function ParentHomePage() {
           //user data exists therefore we have to check the user type and navigate to the appropriate screen\
           if (fetchedUserData.userType == "parent") {
             setUserData(fetchedUserData);
-            // fetchChildren(fetchedUserData.children).then((sucess) => {
-            //     setIsLoading(false);
-            // }).catch((err) => {console.log(err)});
+            fetchChildren(fetchedUserData.children).then((sucess) => {
+                setIsLoading(false);
+            }).catch((err) => {console.log(err)});
             // //   .then((fetchedChildrenData) => {
             // //     setChildren(fetchedChildrenData);
             // //     console.log("fetched childrens" + JSON.stringify(fetchedChildrenData))
@@ -102,10 +100,10 @@ function ParentHomePage() {
         <p className="logoutText">Log out</p>
       </div>
       {
-        userData.children.map((childData) => {
+        children.map((childData) => {
             console.log("childData: " + JSON.stringify(childData))
             return (
-                <ChildCard childData={childData} key={childData.name}/>
+                <ChildCard childData={childData} key={childData.id}/>
             )
         })
       }     
@@ -123,6 +121,7 @@ function ParentHomePage() {
               src={require("../assets/instagramLogo.png")}
               alt=""
               className="socialLogo"
+              
             />
             <div className="socialLogoContainer">
               <img
