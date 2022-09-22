@@ -14,6 +14,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import StudentSearchPage from "./screens/studentSearchPage";
+import StudentApprovalPage from "./screens/studentApprovalPage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -40,7 +41,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/temp" element={<LandingPage />} />
           <Route path="/choice" element={<UserChoicePage />} />
 
           <Route path="/home" element={<ParentHomePage />} />
@@ -50,6 +51,9 @@ function App() {
           <Route path="/login" element={<LoginScreen />} />
 
           <Route path="/search" element={<StudentSearchPage />} />
+        
+          <Route path="/approval" element={<StudentApprovalPage />} />
+
         </Routes>
         {/* <header className="App-header">
         <h1>Kids E-Wallet</h1>
