@@ -8,7 +8,7 @@ function StudentApprovalPage() {
     navigate("/search");
   }
   const handleApproval = () => {
-    navigate("/search");
+    navigate("/purchase");
   }
 
   return (
@@ -37,7 +37,7 @@ function StudentApprovalPage() {
 
         <div className="actionButtonsContainer">
             <div className="approvalActionButton approvalButton">
-                <p className="approvalActionButtonText">Approval</p>
+                <p className="approvalActionButtonText" onClick={handleApproval}>Approval</p>
             </div>
             <div className="approvalActionButton declineButton" onClick={handleDecline}>
                 <p className="approvalActionButtonText">Decline</p>

@@ -1,0 +1,319 @@
+.purchasePageContainer {
+    width: 100vw;
+    height: 100vh;
+    }
+
+.backgroundCoinBackCircle {
+    width: 309px;
+    height: 309px;
+    background-color: #D69E01;
+    border-radius: 50%;
+    position: absolute;
+    top: -139px;
+    left: 39.23vw;
+}
+
+.availableBalanceContainer {
+    display: flex;
+    position: absolute;
+    top: 5px;
+    left: 39.23vw;
+    justify-content: center;
+    align-items: center;
+    width: 309px;
+}
+
+.headerContainer {
+    margin-left: 29px;
+    margin-bottom: 25px;
+}
+
+.availableBalance {
+    margin-bottom: 0;
+    font-size: 70px;
+    color: white;
+    font-weight: bold;
+}
+
+.imgContainer{
+    width: 132px;
+    height: 154px;
+    border-radius: 49px;
+    overflow: hidden;
+    border: black 1px solid;
+
+}
+.childInfoContainer {
+    display: flex;
+    flex-direction: row;
+}
+.otherInfoContainer {
+    margin-left: 18px;
+    margin-top: 23px;
+}
+
+.childName {
+    color: #332C8B;
+    font-size: 50px;
+    font-weight: bold;
+    margin-left: 0px;
+}
+
+.allergiesIconsContainer {
+    display: flex;
+    align-items: center;
+}
+
+.childAllergiesIconsContainer {
+    display: flex;
+    align-items: center;
+}
+
+.allergyRestrictIcon {
+    width: 42px;
+    height: 42px;
+}
+
+.searchInputField {
+    width: 323px;
+    height: 60px;
+    background-color: #DDECFE;
+    padding-left: 19px;
+    font-size: 30px;
+    border-radius: 13px;
+    border: none;
+}
+
+.searchContainer {
+    display: flex;
+    position: absolute;
+    top: 39px;
+    right: 8px;
+}
+
+.searchIconButton {
+    margin-left: 12px;
+}
+
+.mainContentContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.productsSectionContainer {
+    width: 1047px;
+
+}
+
+.mainSectionTitle {
+    font-size: 40px;
+    color: #3B85D2;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.productCategorySection {
+    width: 100%;
+}
+
+.categoryTitleContainer {
+    height: 53px;
+    background-color: red;
+    width: fit-content;
+    padding-right: 25px;
+    padding-left: 25px;
+    margin-bottom: 39px;
+}
+
+.categoryTitle {
+    margin-bottom: 0px;
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
+}
+
+.categoryProductsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 25px;
+}
+
+.mainSectionDivider {
+    width: 2px;
+    height: 2000px;
+    background-color: #121683;
+}
+
+.receiptSectionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: flex-start;
+    flex: 1;
+}
+
+.receiptTitle {
+    margin-bottom: 44px;
+}
+
+.singleItemContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    width: 100%;
+    margin-bottom: 46px;
+}
+
+.itemQuantity {
+    font-size: 25px;
+    color: #0FB700;
+    font-weight: 500;
+    margin-right: 12px;
+    margin-bottom: 0;
+    line-height: 25px;
+
+}
+
+.itemName {
+    font-size: 25px;
+    color: #0E5BA1;
+    font-weight: 500;
+    margin-bottom: 0;
+    line-height: 25px;
+    width: 190px;
+
+}
+
+.itemCoinImage {
+    width: 21px;
+    height: 21px;
+}
+
+.itemPriceContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 56px;
+}
+
+.receiptItemsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.itemPrice {
+    font-size: 28px;
+    font-weight: 500;
+    color: #D69E01;
+    margin-bottom: 0;
+    line-height: 25px;
+}
+
+.itemCoinImageContainer {
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.itemSection {
+    display: flex;
+}
+
+.receiptDivider {
+    width: 100%;
+    height: 2px;
+    background-color: #121683;
+}
+
+.totalAmountTitle {
+    font-size: 30px;
+    font-weight: bold;
+    color: #121683;
+    margin-bottom: 0;
+    line-height: 30px;
+}
+
+.totalContainer {
+    padding-left: 27px;
+    padding-right: 45px;
+    padding-top: 21px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 85px;
+}
+
+.totalCoinImage {
+    width: 26px;
+    height: 24px;
+}
+
+.totalAmountText {
+    font-size: 35px;
+    color: #D69E01;
+    font-weight: 500;
+    margin-left: 6px;
+    margin-bottom: 0;
+    line-height: 35px;
+}
+
+.totalAmountContainer {
+    display: flex;
+    align-items: flex-end;
+}
+
+
+.removeItemIconContainer {
+    cursor: pointer;
+}
+
+
+.checkoutButton {
+    background-color: #0FB700;
+    width: 19.86vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 13px;
+    padding: 16px 0;
+}
+
+.checkoutText {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0;
+}
+
+.checkoutButtonContainer {
+    display: flex;
+    justify-content: center;
+}
+
+
+.loadingContainer {
+    width: 100vw;
+    height: 100vh;
+    background-color: darkgrey;
+    position: fixed;
+    opacity: 0.1;
+}
+
+.approvalModalContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background-color: rgba(169, 169, 169, 0.7);
+    z-index: 6;
+}

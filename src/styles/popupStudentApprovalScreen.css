@@ -1,0 +1,100 @@
+.popupStudentApprovalPage {
+    width: 70.27vw;
+    height: 650px;
+    background-color: #332C8B;
+    border-radius: 74px;
+    position: relative;
+}
+
+
+.popupLeftBgPart {
+    position: absolute;
+    left: 2.7vw;
+    top: 63px;
+}
+
+
+.popupRightBgPart {
+    position: absolute;
+    right: 5vw;
+    top: 0;
+}
+
+.popupMainContentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 34px;
+}
+
+
+.popupChildImageContainer {
+    max-height: 259px;
+    max-width: 15.76vw;
+    border-radius: 49px;
+    overflow: hidden;
+}
+
+.popupChildName {
+    color: white;
+    font-size: 45px;
+    font-weight: bold;
+    line-height: 45px;
+    margin-top: 28px;
+    margin-bottom: 28px;
+}
+
+.popupInputField {
+    background-color: #8484BE;
+    font-size: 40px;
+    text-align: center;
+    width: 31.94vw;
+    height: 81px;
+    border-radius: 13px;
+    margin-bottom: 35px;
+    border: none;
+    color: white;
+}
+
+.popupActionButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    width: 31.94vw;
+    justify-content: space-between;
+}
+
+
+
+
+
+
+.popupApproveButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 14.58vw;
+    height: 63px;
+    background-color: #0FB700;
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+.popupDeclineButtonContainer {
+    display: flex;
+    justify-content: center;
+    width: 14.58vw;
+    height: 63px;
+    background-color: #FF0000;
+    border-radius: 13px;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+
+.popupActionButtonText {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0;
+}

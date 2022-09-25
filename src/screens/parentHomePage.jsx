@@ -55,7 +55,6 @@ function ParentHomePage() {
     if (user) {
       fetchUserData(user)
         .then((fetchedUserData) => {
-            setIsLoading(false);
           //user data exists therefore we have to check the user type and navigate to the appropriate screen\
           if (fetchedUserData.userType == "parent") {
             setUserData(fetchedUserData);

@@ -1,0 +1,33 @@
+.balanceAddedModalContainer {
+    width: 610px;
+    height: 545px;
+    background-color: white;
+    border-radius: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.balanceAmount {
+    color: #D69E01;
+    font-size: 96px;
+    font-weight: bold;
+}
+
+.balanceContainer {
+    display: flex;
+    align-items: center;
+}
+
+.coinIcon {
+    width: 56px;
+    height: 77px;
+    margin-right: 20px;
+}
+
+.successMessage {
+    color: #0FB700;
+    font-size: 42px;
+    font-weight: bold;
+}

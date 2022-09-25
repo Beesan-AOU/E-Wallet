@@ -15,6 +15,8 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import StudentSearchPage from "./screens/studentSearchPage";
 import StudentApprovalPage from "./screens/studentApprovalPage";
+import ComponentTesting from "./screens/componentTestingPage";
+import PurchasePage from "./screens/purchasePage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -53,6 +55,10 @@ function App() {
           <Route path="/search" element={<StudentSearchPage />} />
         
           <Route path="/approval" element={<StudentApprovalPage />} />
+
+          <Route path="/testing" element={<ComponentTesting />} />
+
+          <Route path="/purchase" element={<PurchasePage />} />
 
         </Routes>
         {/* <header className="App-header">

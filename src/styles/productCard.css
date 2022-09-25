@@ -1,0 +1,135 @@
+.productCardContainer {
+    padding: 10px;
+    height: 312px;
+    width: 175px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-right: 31px;
+}
+
+.productInfoContainer {
+    width: 175px;
+    height: 195px;
+    border: 2px solid #121683;
+    border-radius: 28px;
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.productImageContainer {
+    height: 95px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.allergiesIconsContainer {
+    position: absolute;
+    top: 12px;
+    left: 9px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.smallAllergyIcon {
+    margin-bottom: 8px;
+}
+.productImageContainer {
+    display: flex;
+    align-items: center;
+}
+.productImage {
+    height: fit-content;
+}
+
+.productName {
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #0E5BA1;
+}
+
+.priceContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.productCoinImage {
+    width: 21px;
+    height: 21px;
+}
+
+.priceText {
+    color: #D69E01;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 0;
+    line-height: 28px;
+    margin-left: 4px;
+}
+.quantityControllerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 157px;
+    margin-top: 10px;
+}
+
+.quantityControllerElement {
+    width: 41px;
+    height: 41px;
+    background-color: #F9BC6F;
+    border-radius: 50%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.quantityControllerElementText {
+    font-size: 30px;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0;
+    line-height: 0px;
+}
+
+
+.quantityText {
+    font-size: 30px;
+    color: red;
+    font-weight: 500;
+}
+
+.addToCartButton:hover {
+    background-color: #81e078;
+
+}
+
+
+.addToCartButton {
+    min-width: 116px;
+    min-height: 49px;
+    background-color: #0FB700;
+    border-radius: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.productAddToCartText {
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 0;
+}
+
