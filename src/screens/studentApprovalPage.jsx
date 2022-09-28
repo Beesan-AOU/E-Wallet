@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/studentApprovalPage.css";
 function StudentApprovalPage() {
@@ -8,8 +9,10 @@ function StudentApprovalPage() {
     navigate("/search");
   }
   const handleApproval = () => {
-    navigate("/purchase");
+    navigate("/purchase", {state: state});
   }
+
+  
 
   return (
     <div className="studentApprovalPageContainer">

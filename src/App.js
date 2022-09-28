@@ -43,7 +43,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/temp" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/choice" element={<UserChoicePage />} />
 
           <Route path="/home" element={<ParentHomePage />} />
@@ -61,25 +61,7 @@ function App() {
           <Route path="/purchase" element={<PurchasePage />} />
 
         </Routes>
-        {/* <header className="App-header">
-        <h1>Kids E-Wallet</h1>
-        <h2 className={"App-description"}>Control what your kids<br/>consume at school</h2>
-        <CallToActionButton/>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <LandingPageIllustration/>
 
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
       </div>
     </Router>
   );

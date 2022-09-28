@@ -1,0 +1,55 @@
+body {
+    background-color: #0FB700;
+}
+.successfulPurchasePopupContainer {
+    width: 70.27vw;
+    height: 81.65vh;
+    background-color: white;
+    border-radius: 74px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.closeIcon {
+    position: absolute;
+    right: 2.5vw;
+    top: 3.14vh;
+    cursor: pointer;
+}
+
+.successfulCoinImage {
+    width: 99px;
+    height: 100px;
+}
+
+
+.successfulAmount {
+    color: #D69E01;
+    font-size: 140px;
+    line-height: 140px;
+    font-weight: bold;
+}
+
+.successfulAmountContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+
+
+.successfulCheckIcon {
+    width: 177px;
+    height: 177px;
+    margin-top: 45px;
+}
+
+.successfulMessage {
+    font-size: 65px;
+    font-weight: bold;
+    text-align: center;
+    color: #0FB700;
+    margin-top: 43px;
+}

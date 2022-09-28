@@ -307,7 +307,7 @@
     opacity: 0.1;
 }
 
-.approvalModalContainer {
+.modalContainer {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -315,5 +315,14 @@
     align-items: center;
     position: fixed;
     background-color: rgba(169, 169, 169, 0.7);
+    z-index: 6;
+}
+
+.errorMessageContainer {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: fixed;
     z-index: 6;
 }

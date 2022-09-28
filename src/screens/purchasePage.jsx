@@ -6,18 +6,38 @@ import { collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../App";
 import { useState } from "react";
 import ReceiptItem from "../components/receiptItem";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 import PopupStudentApprovalPage from "../components/popupStudentApprovalScreen";
 import LoadingScreen from "../components/LoadingScreen";
+import { useLocation } from "react-router-dom";
+import { async } from "@firebase/util";
+import SuccessfulPurchasePopup from "../components/successfulPurchasePopup";
+import PopupErrorMessage from "../components/popupErrorMessage";
 
 
 function PurchasePage() {
+  const { state } = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [receiptItems, setReceiptItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [approvalModalShown, setApprovalModalShown] = useState(false);
+  const [successfulPurchaseMsgShown, setSuccessfulPurchaseMsgShown] = useState(false);
+  const [errorMessageShown, setErrorMessageShown] = useState(false);
+  const [currentStudent, setCurrentStudent] = useState(state);
+  const [errorHeading, setErrorHeading] = useState();
+  const [errorMessage, setErrorMessage] = useState();
+  let newStudentData = {}
+
+  const fetchStudentData = () => {
+    onSnapshot(doc(db, "children", state.id), (doc) => {
+      console.log("Current data: ", doc.data());
+      setCurrentStudent(doc.data());
+  });
+  }
+
+
 
   const handleSearch = async () => {
     const docRef = doc(db, "children", searchQuery);
@@ -25,9 +45,82 @@ function PurchasePage() {
     
     if (docSnap.exists()) {
       setApprovalModalShown(true);
+      setSearchQuery("");
+      newStudentData = docSnap.data();
     } else {
     }
   }
+
+  const successfulCheckout = async () => {
+    let newBalance = currentStudent.balance - totalAmount;
+    let newPurchaseHistory =[...currentStudent.purchaseHistory]
+    receiptItems.forEach((item) => {
+      console.log("item" + JSON.stringify(item));
+      let purchaseHistoryItem = {
+        itemName: item.itemName,
+        price: item.totalPrice,
+        quantity: item.quantity,
+        date: new Date().toLocaleDateString(),
+        image: item.image
+      }
+      newPurchaseHistory = [...newPurchaseHistory, purchaseHistoryItem]
+    })
+    let newStudentData = {...currentStudent, balance: newBalance, purchaseHistory: newPurchaseHistory}
+    console.log("data to be added " + JSON.stringify(newStudentData.purchaseHistory));
+    await setDoc(doc(db, "children", currentStudent.id), newStudentData);
+    return newStudentData;
+  }
+
+
+  const handleCheckout = () => {
+    if (totalAmount > currentStudent.balance) {
+      setErrorHeading("Error");
+      setErrorMessage("Insufficient Funds");
+      setErrorMessageShown(true);
+      setTimeout(() => {
+        setErrorMessageShown(false)
+      }, 5000);
+      return;
+    }
+    else if (totalAmount == 0) {
+      setErrorHeading("Error");
+      setErrorMessage("Please add some item to cart before checking out");
+      setErrorMessageShown(true);
+      setTimeout(() => {
+        setErrorMessageShown(false)
+      }, 5000);
+      return;
+    }
+    for(let i = 0; i < receiptItems.length; i++) {
+      let currentItem = receiptItems[i];
+      for(let j = 0; j < currentItem.allergens.length; j++) {
+        let currentAllergy = currentItem.allergens[j];
+        for(let k = 0; k < currentStudent.allergies.length; k++) {
+          let currentStudentAllergy = currentStudent.allergies[k];
+          if (currentAllergy == currentStudentAllergy) {
+            setErrorHeading("Careful!");
+            setErrorMessage(`${currentStudent.name} is not allowed to buy ${currentItem.itemName} due to ${currentAllergy} allergy!`)
+            setErrorMessageShown(true);
+            setTimeout(() => {
+              setErrorMessageShown(false)
+            }, 5000);
+            console.log("not allowed due to " + currentAllergy + " allergy")
+            return;
+          }
+          
+        }
+      }
+    }
+    successfulCheckout().then((val) => {
+      setSuccessfulPurchaseMsgShown(true);
+      setReceiptItems([]);
+      setTotalAmount(0)
+      console.log("new data" + JSON.stringify(val))
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
 
   const fetchAllProducts = async () => {
     let pastriesProducts = [];
@@ -51,6 +144,7 @@ function PurchasePage() {
   };
 
   useEffect(() => {
+    fetchStudentData();
     fetchAllProducts()
       .then((promise) => {
         setProducts(promise);
@@ -69,10 +163,28 @@ function PurchasePage() {
   ) : (
     <div className="purchasePageContainer">
       {approvalModalShown? (
-        <div className="approvalModalContainer">
-            <PopupStudentApprovalPage/>
+        <div className="modalContainer">
+            <PopupStudentApprovalPage setApprovalModalShown={setApprovalModalShown} newStudentData={newStudentData}/>
         </div>
-      ) : null}
+      ) : null
+      }
+
+      {
+        successfulPurchaseMsgShown?
+        <div className="modalContainer">
+        <SuccessfulPurchasePopup amount={totalAmount.toString()} setSuccessfulPurchaseMsgShown={setSuccessfulPurchaseMsgShown}/>
+      </div>:null
+        
+      }
+
+{
+        errorMessageShown?
+        <div className="errorMessageContainer">
+        <PopupErrorMessage errorHeading={errorHeading} errorMessage={errorMessage}/>
+      </div>:null
+        
+      }
+
       <div className="backgroundCoinBackCircle"></div>
       <div className="availableBalanceContainer">
         <img
@@ -80,7 +192,7 @@ function PurchasePage() {
           alt=""
           className="coinImage"
         />
-        <p className="availableBalance">50 SR</p>
+        <p className="availableBalance">{`${currentStudent.balance} SR`}</p>
       </div>
       <div className="searchContainer">
         <input
@@ -107,7 +219,7 @@ function PurchasePage() {
             />
           </div>
           <div className="otherInfoContainer">
-            <p className="childName">Lina Ahmad</p>
+            <p className="childName">{currentStudent.name}</p>
             <div className="childAllergiesIconsContainer">
               <img
                 src={require("../assets/restricedPeanuts.png")}
@@ -246,7 +358,7 @@ function PurchasePage() {
             </div>
           </div>
           <div className="checkoutButtonContainer">
-            <div className="checkoutButton">
+            <div className="checkoutButton" onClick={handleCheckout}>
               <p className="checkoutText">Checkout</p>
             </div>
           </div>

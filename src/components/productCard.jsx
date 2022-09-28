@@ -71,7 +71,9 @@ function ProductCard(props) {
                         let itemMap = {
                             quantity: newQuantity,
                             itemName: productData.name,
-                            totalPrice: newQuantity * productData.price
+                            totalPrice: newQuantity * productData.price,
+                            allergens: productData.allergens,
+                            image: productData.image
                         }
                         newArray = [...receiptItems, itemMap].filter((reduceItem) => {
                             return reduceItem != tempItem;
@@ -82,7 +84,9 @@ function ProductCard(props) {
                     let itemMap = {
                         quantity: quantity,
                         itemName: productData.name,
-                        totalPrice: quantity * productData.price
+                        totalPrice: quantity * productData.price,
+                        allergens: productData.allergens,
+                        image: productData.image
                     }
                     newArray = [...receiptItems, itemMap]
                     

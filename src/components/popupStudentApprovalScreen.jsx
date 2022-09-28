@@ -1,8 +1,17 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import "../styles/popupStudentApprovalScreen.css"
-function PopupStudentApprovalPage() {
+function PopupStudentApprovalPage(props) {
+    const navigate = useNavigate();
+
     const handleDecline = () => {
-        
+        props.setApprovalModalShown(false);
+    }
+
+    const handleApprove = () => {
+        navigate("/purchase", {state: props.newStudentData});
+        props.setApprovalModalShown(false);
+
     }
 
 
@@ -19,7 +28,7 @@ function PopupStudentApprovalPage() {
                 <input type="text" className='popupInputField' disabled value={"2MTEPW14"}/>
                 <div className="popupActionButtonsContainer">
                     <div className="popupApproveButtonContainer">
-                        <p className="popupActionButtonText">
+                        <p className="popupActionButtonText" onClick={handleApprove}>
                             Approve
                         </p>
                     </div>

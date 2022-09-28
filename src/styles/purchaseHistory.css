@@ -1,0 +1,40 @@
+.purchaseHistoryContainer {
+    width: 76.18vw;
+    height: 85.42vh;
+    border-radius: 80px;
+    position: relative;
+    padding-top: 28px;
+    overflow: hidden;
+}
+
+.purchaseHistroyTitle {
+    font-size: 40px;
+    font-weight: bold;
+    color: #0FB700;
+    margin-left: 51px;
+    margin-bottom: 39px;
+}
+
+.purchaseHistoryItemCards {
+    overflow-y: scroll;
+    height: 66vh;
+}
+
+.purchaseHistoryItemCards::-webkit-scrollbar {
+    width: 12px;
+    height: 400px;
+}
+
+.purchaseHistoryItemCards::-webkit-scrollbar-track {
+    border-radius: 10px;
+    height: 400px;
+
+}
+
+.purchaseHistoryItemCards::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #BBBBBB;
+    width: 8px;
+    height: 400px;
+
+}
