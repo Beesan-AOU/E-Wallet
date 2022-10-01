@@ -4,6 +4,7 @@ function SuccessfulPurchasePopup(props) {
     return ( 
         <div className="successfulPurchasePopupContainer">
             <img src={require("../assets/closeIcon.png")} alt="" className='closeIcon' onClick={()=> {
+                props.setTotalAmount(0);
                 props.setSuccessfulPurchaseMsgShown(false);
             }}/>
             <div className="successfulAmountContainer">

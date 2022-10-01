@@ -3,10 +3,10 @@ import "../styles/landingPageIllustration.css"
 function LandingPageIllustration() {
     return (
         <React.Fragment>
-            <div className='centerLargeCircle'></div>
-            <div className='upperSmallCircle'></div>
-            <div className='lowerSmallCircle'></div>
-            <div className='laptopImage'></div>
+            <img src={require("../assets/landingBackgroundCircle.png")} alt="" className='landingBackgroundCircle'/>
+            <img src={require("../assets/upperCircleImage.png")} alt="" className='upperSmallCircle'/>
+            <img src={require("../assets/lowerCircleImage.png")} alt="" className='lowerCircleImage'/>
+            <img src={require("../assets/laptopImage.png")} alt="" className='laptopImage'/>
         </React.Fragment>
      );
 }

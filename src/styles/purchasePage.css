@@ -72,6 +72,7 @@
 .allergyRestrictIcon {
     width: 42px;
     height: 42px;
+    margin-right: 10px;
 }
 
 .searchInputField {
@@ -296,6 +297,7 @@
 .checkoutButtonContainer {
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 

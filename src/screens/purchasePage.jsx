@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import { async } from "@firebase/util";
 import SuccessfulPurchasePopup from "../components/successfulPurchasePopup";
 import PopupErrorMessage from "../components/popupErrorMessage";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 
 function PurchasePage() {
@@ -20,6 +21,7 @@ function PurchasePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isOverlayLoading, setIsOverlayLoading] = useState(false);
   const [receiptItems, setReceiptItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [approvalModalShown, setApprovalModalShown] = useState(false);
@@ -32,7 +34,6 @@ function PurchasePage() {
 
   const fetchStudentData = () => {
     onSnapshot(doc(db, "children", state.id), (doc) => {
-      console.log("Current data: ", doc.data());
       setCurrentStudent(doc.data());
   });
   }
@@ -48,10 +49,12 @@ function PurchasePage() {
       setSearchQuery("");
       newStudentData = docSnap.data();
     } else {
+      //add error (student doesnt exist)
     }
   }
 
   const successfulCheckout = async () => {
+    setIsOverlayLoading(true);
     let newBalance = currentStudent.balance - totalAmount;
     let newPurchaseHistory =[...currentStudent.purchaseHistory]
     receiptItems.forEach((item) => {
@@ -112,9 +115,9 @@ function PurchasePage() {
       }
     }
     successfulCheckout().then((val) => {
+      setIsOverlayLoading(false);
       setSuccessfulPurchaseMsgShown(true);
       setReceiptItems([]);
-      setTotalAmount(0)
       console.log("new data" + JSON.stringify(val))
     }).catch((err) => {
       console.log(err);
@@ -172,7 +175,7 @@ function PurchasePage() {
       {
         successfulPurchaseMsgShown?
         <div className="modalContainer">
-        <SuccessfulPurchasePopup amount={totalAmount.toString()} setSuccessfulPurchaseMsgShown={setSuccessfulPurchaseMsgShown}/>
+        <SuccessfulPurchasePopup amount={totalAmount.toString()} setSuccessfulPurchaseMsgShown={setSuccessfulPurchaseMsgShown} setTotalAmount={setTotalAmount}/>
       </div>:null
         
       }
@@ -184,6 +187,13 @@ function PurchasePage() {
       </div>:null
         
       }
+{
+        isOverlayLoading?
+        <LoadingScreen isLoading={isOverlayLoading}/>
+        :null
+        
+      }
+
 
       <div className="backgroundCoinBackCircle"></div>
       <div className="availableBalanceContainer">
@@ -221,16 +231,15 @@ function PurchasePage() {
           <div className="otherInfoContainer">
             <p className="childName">{currentStudent.name}</p>
             <div className="childAllergiesIconsContainer">
-              <img
-                src={require("../assets/restricedPeanuts.png")}
+            {currentStudent.allergies.map((item, index) => {
+              return (
+                <img
+                src={require("../assets/restricted_" + item + ".png")}
                 alt=""
                 className="allergyRestrictIcon"
               />
-              <img
-                src={require("../assets/restricedCitrus.png")}
-                alt=""
-                className="allergyRestrictIcon"
-              />
+              );
+            })}
             </div>
           </div>
         </div>

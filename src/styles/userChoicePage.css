@@ -2,6 +2,7 @@
     background-color: #332C8B;
     width: 100vw;
     height: 100vh;
+    font-family: "K2D";
 }
 
 .userChoiceRightBgPartContainer {
@@ -64,6 +65,7 @@
     color: white;
     font-size: 40px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .choiceContainer {

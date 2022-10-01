@@ -17,7 +17,6 @@ function StudentSearchPage() {
         if (docSnap.exists()) {
             //edit
             navigate("/approval", {state: docSnap.data()});
-          console.log("Document data:", docSnap.data());
         } else {
           setErrorMessage("Student doesn't exist on our database");
         }

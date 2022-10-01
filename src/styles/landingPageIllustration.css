@@ -1,47 +1,30 @@
-.centerLargeCircle {
-    width: 52.1vw;
-    height: 52.1vw;
-    background-image: linear-gradient(-45deg,transparent 30%,  #2BAAAA 50%, #EDAFAF 100%);
-    border-radius: 50%;
-    position: absolute;
-    right: -2.73vw;
-    top: 15.4vh;
-}
 
 .upperSmallCircle {
     position: absolute;
-    width: 9.53vw;
-    height: 9.53vw;
     border-radius: 50%;
     background-color: antiquewhite;
-    top: 6.94vh;
-    right: 4.21vw;
-    background-image: url("../assets/upperCircleImage.png");
-    background-size: 9.53vw 9.53vw;
+    top: 4vh;
+    right: 5.34vw;
 }
 
 
-.lowerSmallCircle {
+.lowerCircleImage {
     position: absolute;
-    width: 9.53vw;
-    height: 9.53vw;
-    border-radius: 50%;
-    background-color: antiquewhite;
-    bottom: 8.19vh;
-    right: 43.2vw;
-    background-image: url("../assets/lowerCircleImage.png");
-    background-size: 9.53vw 9.53vw;
+    bottom: 7.03vh;
+    right: 41.16vw;
 
 }
 
 
 .laptopImage {
-    width: 47.26vw;
-    height: 45vh;
-    background-image: url("../assets/LaptopImage.png");
-    background-size: 47.26vw 45vh;
-    background-repeat: no-repeat;
+
     position: absolute;
     top: 28vh;
     right: 0;
+}
+
+.landingBackgroundCircle {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
 }

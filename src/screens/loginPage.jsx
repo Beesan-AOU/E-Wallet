@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { Component } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { auth, db } from "../App";
 import "../styles/loginPage.css";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -9,11 +9,12 @@ import { doc, getDoc } from "firebase/firestore";
 
 function LoginScreen() {
   let navigate = useNavigate();
+  const { state } = useLocation();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [isOverlayLoading, setIsOverlayLoading] = useState("")
   const handleUserLogin = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, userEmail, userPassword)
@@ -25,20 +26,20 @@ function LoginScreen() {
 
         if (docSnap.exists()) {
             //user data exists therefore we have to check the user type and navigate to the appropriate screen\
-            if (docSnap.data().userType == "parent") {
+            if (docSnap.data().userType == state.loginType) {
+              if (state.loginType) {
                 navigate("/home");
-            }
-            else if (docSnap.data().userType == "school") {
+              }
+              else if (state.loginType == "school") {
                 navigate("/search");
+              }
             }
-          console.log("Document data:", docSnap.data());
+            else {
+              setErrorMessage("User Not Found");
+            }
         } else {
-          setErrorMessage("User Not Found on Database");
+          setErrorMessage("User Not Found");
         }
-
-
-        console.log("user signed in");
-        console.log(userCredential);
       })
       .catch((error) => {
         setErrorMessage(error.code);
@@ -49,6 +50,8 @@ function LoginScreen() {
           case "auth/wrong-password":
             setErrorMessage("Incorrect Password");
             break;
+          case "auth/network-request-failed":
+            setErrorMessage("Please make sure you have a valid internet connection")
           default:
             setErrorMessage("Unknown Error Occured Please Try Again");
             console.log(error.code);
@@ -74,7 +77,7 @@ function LoginScreen() {
       </div>
       <form className="formContentContainer" onSubmit={handleUserLogin}>
         <img
-          src={require("../assets/parentChoiceImage.png")}
+          src={require("../assets/" + state.loginType + "ChoiceImage.png")}
           alt=""
           className="formImage"
         />
@@ -93,7 +96,7 @@ function LoginScreen() {
           type="password"
           name="password"
           id="password"
-          className="FormInputField-mid"
+          className="FormInputField-mid loginPasswordInputField"
           placeholder="Password"
           value={userPassword}
           onChange={(e) => setUserPassword(e.target.value)}

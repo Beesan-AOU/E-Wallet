@@ -7,6 +7,7 @@ import "../styles/editChildInfoPage.css";
 function EditChildInfoPage() {
 
   const handleCheckBoxEvents = (event) => {
+    //in case the user checks a checkbox
     if (event.target.checked) {
         if (event.target.name == "other") {
             //handle other allergies here
@@ -17,6 +18,7 @@ function EditChildInfoPage() {
             }
         }
     }
+    //in case the user unchecks a checkbox
     else {
         if (event.target.name == "other") {
             //handle other allergies here

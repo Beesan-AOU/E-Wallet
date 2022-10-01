@@ -1,0 +1,186 @@
+.depositPopupContainer {
+  width: 77.15vw;
+  height: 80.27vh;
+  background-color: white;
+  box-shadow: 5px 5px black;
+  border-radius: 80px;
+  display: flex;
+}
+
+.depositAmountContainer {
+  display: flex;
+  margin-bottom: 3.51vh;
+}
+
+.depositLeftPartContainer {
+  padding-top: 3.51vh;
+  padding-left: 3.47vw;
+  padding-right: 12.77vw;
+  width: 50vw;
+}
+
+.depositAmountTitle {
+  font-size: 35px;
+  font-weight: bold;
+  color: red;
+  margin-bottom: 0;
+  margin-right: 1.6vw;
+}
+
+.depositAmountInputContainer {
+  width: 13.54vw;
+  height: 6.28vh;
+}
+.cvvInput {
+  width: 5.48vw !important;
+  margin-left: 0 !important;
+}
+.depositSectionInputContainer {
+  width: 33.33vw;
+  height: 7.28vh;
+  margin-bottom: 30px;
+}
+
+.depositAmountInput {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  font-size: 28px;
+  background-color: #eaf4ff;
+  border: none;
+  padding-left: 20px;
+}
+
+.cardNumberInput {
+  padding-left: 45px;
+}
+
+.depositAmountInputContainer {
+  position: relative;
+  display: flex;
+}
+
+.depositAmountInputLabel {
+  position: absolute;
+  right: 0.55vw;
+  top: 3px;
+  margin-bottom: 0;
+  font-size: 28px;
+  color: #c7c7cd;
+}
+
+.depositSectionTitle {
+  color: #3d60e8;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.depositSectionTitleContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.75vh;
+}
+
+.cardNumberIconContainer {
+  width: 24px;
+  height: 24px;
+  margin-left: 9px;
+}
+
+.dateSection {
+  width: 36.8vw;
+}
+
+.date-cvv-container {
+  display: flex;
+  width: 100%;
+}
+
+
+
+select {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.dateDropDownMenu {
+  width: 10.83vw;
+  font-size: 25px;
+  padding-left: 11px;
+  border: none;
+  border-radius: 13px;
+  background-color: #EAF4FF;
+}
+
+.dateDropDownMenu:focus {
+  outline: none;
+}
+.monthPlaceholder {
+  color: #C7C7CD;
+}
+.DateDropdownMenuSection {
+  display: flex;
+}
+
+.yearDropDownMenu {
+  margin-left: 29px;
+  margin-right: 10.13vw;
+}
+
+.depositSectionDivider {
+  height: 58vh;
+  width: 2px;
+  background-color: #6d92e4;
+  margin-top: 16px;
+}
+
+.depositRightPartContentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.depositRightPartContainer {
+  display: flex;
+}
+
+.depositRightPartTitle {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  color: #3d60e8;
+  margin-bottom: 0;
+  margin-left: 16px;
+}
+
+.acceptedCardsImagesContainer {
+  display: flex;
+  flex-direction: column;
+  height: 358px;
+  justify-content: space-between;
+  margin-top: 7.28vh;
+  margin-bottom: 6.5vh;
+}
+.yearPlaceholder {
+  color: #C7C7CD;
+}
+.proceedButtonContainer {
+    width: 22.22vw;
+    height: 10.8vh;
+    background-color: #3D60E8;
+    margin-left: 16px;
+    border-radius: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.proceedButtonText {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    margin: auto;
+}

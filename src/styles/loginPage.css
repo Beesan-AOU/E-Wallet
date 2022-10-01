@@ -64,7 +64,12 @@
 .forgotPasswordText {
     font-size: 20px;
     font-weight: 500;
+    margin-bottom: 4.02vh;
     color: white;
+}
+
+.loginPasswordInputField {
+    margin-bottom: 1.5vh !important;
 }
 
 .forgotPasswordContainer {

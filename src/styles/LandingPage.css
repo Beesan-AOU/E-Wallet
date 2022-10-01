@@ -1,9 +1,29 @@
 .landingPageContainer {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-    background: url('../assets/LandingPageBackground.png')  no-repeat center center fixed;
-    background-size: 100vw 100vh;
+    background-color: #332C8B;
     overflow: hidden;
+    position: relative;
+    font-family: 'K2D';
+}
+
+.cloudImage {
+    position: absolute;
+}
+
+.cloudImage1 {
+    top: -20px;
+    right: 381px;
+}
+
+.cloudImage2 {
+    top: 170px;
+    left: -49px;
+}
+
+.cloudImage3 {
+    left: 492px;
+    bottom: -40px;
 }
 
 
@@ -14,13 +34,45 @@
 
 
 .title {
-    font-size: 7.65vw;
+    font-size: 98px;
+    background: -webkit-linear-gradient(#ADC6FC, #FFFFFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    
 }
 
 .appDescription {
-    font-size: 60px;
+    font-size: 50px;
     font-weight: bold;
     color: white;
     margin-top: 13.3vh;
     line-height: 70px;
+}
+
+.landing-loginButtonContainer {
+    margin-top: 29.14vh;
+    width: 32.84vw;
+    height: 11.55vh;
+    background-color: white;
+    margin-left: 2.84vw;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 2.56vw;
+    padding-right: 1.52vw;
+    cursor: pointer;
+}
+
+.landingArrowImage {
+    width: 40px;
+    height: 30px;
+}
+
+.landing-loginButtonText {
+    color: #0E5BA1;
+    font-size: 35px;
+    font-weight: 600;
+    margin: 0;
 }

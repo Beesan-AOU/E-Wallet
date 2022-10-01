@@ -21,6 +21,7 @@ import { async } from "@firebase/util";
 
 function ParentHomePage() {
   const navigate = useNavigate();
+  
   const [userData, setUserData] = useState({});
   const [children, setChildren] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
