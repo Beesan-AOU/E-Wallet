@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DepositPopup from "../components/depositPopup";
 import BalanceAddedModal from "../components/balanceAddedModal";
 
@@ -8,7 +8,6 @@ import "../styles/editChildInfoPage.css";
 import { useEffect } from "react";
 import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../App";
-import { async } from "@firebase/util";
 
 function EditChildInfoPage() {
   const handleCheckBoxEvents = (event) => {
@@ -39,10 +38,12 @@ function EditChildInfoPage() {
   };
 
   const { state } = useLocation();
+  const navigation = useNavigate();
   const [diseasesFound, setDiseasesFound] = useState(state.diseasesFound);
   console.log("diseases found = " + diseasesFound);
   const [isLoading, setIsLoading] = useState(true);
   const [currentStudent, setCurrentStudent] = useState();
+  const [studentBalance, setStudentBalance] = useState();
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState();
   const [diseases, setDiseases] = useState([]);
@@ -63,7 +64,6 @@ function EditChildInfoPage() {
   const fetchStudentData = async () => {
     const docRef = doc(db, "children", state.id);
     const docSnap = await getDoc(docRef);
-
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
@@ -72,9 +72,24 @@ function EditChildInfoPage() {
     }
   };
 
-  const uploadStudentData = () => {
+  const uploadStudentData = async () => {
     const newStudentData = {...currentStudent, height: height,
-    weight: weight, }
+    weight: weight, diseasesFound: diseasesFound, diseases: diseases, allergies: allergies, emergencyContacts: [
+      {
+        fullName: contact1FullName,
+        mobileNumber: contact1MobileNumber,
+        relation: contact1Relation
+      },
+      {
+        fullName: contact2FullName,
+        mobileNumber: contact2MobileNumber,
+        relation: contact2Relation
+      }
+    ]
+  }
+  await setDoc(doc(db, "children", state.id), newStudentData);
+
+
   }
 
   const initializeState = (val) => {
@@ -83,7 +98,7 @@ function EditChildInfoPage() {
     setDiseasesFound(val.diseasesFound);
     setDiseases(val.diseases);
     setAllergies(val.allergies);
-
+    setStudentBalance(val.balance);
     console.log("contacts: " + JSON.stringify(val.emergencyContacts))
     val.emergencyContacts.forEach((contact, index) => {
       if (index == 0) {
@@ -119,9 +134,14 @@ function EditChildInfoPage() {
       {isDepositModalShown ? (
         <div className="depositModal">
           <DepositPopup
+            studentID = {state.id}
             setIsDepositModalShown={setIsDepositModalShown}
             setIsAmountAddedModalShown={setIsAmountAddedModalShown}
             setAddedAmount={setAddedAmount}
+            studentBalance={studentBalance}
+            currentStudent={currentStudent}
+            setCurrentStudent={setCurrentStudent}
+            setStudentBalance={setStudentBalance}
           />
         </div>
       ) : null}
@@ -150,7 +170,7 @@ function EditChildInfoPage() {
           </div>
           <div className="childBalanceContainer">
             <img src={require("../assets/coinImage.png")} alt="" />
-            <p className="childBalanceText">{state.balance} SR</p>
+            <p className="childBalanceText">{studentBalance} SR</p>
             <img
               src={require("../assets/addBalanceIconButton.png")}
               alt=""
@@ -550,7 +570,13 @@ Not Needed
               </div>
             </div>
           </div>
-          <div className="flexButtonContainer">
+          <div className="flexButtonContainer" onClick={() => {
+              uploadStudentData().then((res) => {
+                navigation("/home");
+              }).catch((error) => {
+                console.log(error);
+              })
+            }}>
             <div className="saveButtonContainer">
               <p className="saveText">Save</p>
             </div>

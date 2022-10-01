@@ -199,6 +199,7 @@ select option:hover {
     text-align: center;
     border-radius: 13px;
     padding: 2vh 0;
+    cursor: pointer;
 }
 
 .saveText {

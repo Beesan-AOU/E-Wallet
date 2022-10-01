@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { useState } from "react";
+import { doc, setDoc } from "firebase/firestore";
 import "../styles/depositPopup.css";
+import { db } from "../App";
 function DepositPopup(props) {
+  const {currentStudent} = props;
+  const {setCurrentStudent} = props;
+  const {setStudentBalance} = props;
+  const {studentBalance} = props;
+  const {studentID} = props;
   const [cardNumber, setCardNumber] = useState("");
   const [CVV, setCVV] = useState("");
   const [cardHolder, setCardHolder] = useState("");
@@ -35,14 +42,27 @@ function DepositPopup(props) {
         setCardNumber(newValue);
       }
     }
-    
   };
+
+  const addBalanceToDB = async () => {
+    const newStudentData = {...currentStudent, balance: Number(studentBalance) + Number(depositAmount)}
+    await setDoc(doc(db, "children", studentID), newStudentData);
+    return newStudentData;
+  }
+
   return (
     <form action="post" onSubmit={(event) => {
       event.preventDefault();
-      setIsDepositModalShown(false);
-      setAddedAmount(depositAmount);
-      setIsAmountAddedModalShown(true);
+      addBalanceToDB().then(val => {
+        setCurrentStudent(val);
+        setStudentBalance(val.balance);
+        setIsDepositModalShown(false);
+        setAddedAmount(depositAmount);
+        setIsAmountAddedModalShown(true);
+      }).catch(err => {
+        console.log(err);
+      }) 
+
     }}>
     <div className="depositPopupContainer">
       <div className="depositLeftPartContainer">
