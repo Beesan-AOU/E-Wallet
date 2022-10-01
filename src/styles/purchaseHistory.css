@@ -5,6 +5,7 @@
     position: relative;
     padding-top: 28px;
     overflow: hidden;
+    background-color: white;
 }
 
 .purchaseHistroyTitle {
@@ -37,4 +38,11 @@
     width: 8px;
     height: 400px;
 
+}
+
+.histroy-closeIcon {
+    position: absolute;
+    right: 50px;
+    top: 45px;
+    cursor: pointer;
 }
