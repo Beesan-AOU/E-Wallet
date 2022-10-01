@@ -1,44 +1,50 @@
 import React, { Component } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import DepositPopup from "../components/depositPopup";
+import BalanceAddedModal from "../components/balanceAddedModal";
 
 import "../styles/editChildInfoPage.css";
+import { useEffect } from "react";
+import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
+import { db } from "../App";
+import { async } from "@firebase/util";
 
 function EditChildInfoPage() {
-
   const handleCheckBoxEvents = (event) => {
     //in case the user checks a checkbox
     if (event.target.checked) {
-        if (event.target.name == "other") {
-            //handle other allergies here
+      if (event.target.name == "other") {
+        //handle other allergies here
+      } else {
+        if (!allergies.includes(event.target.name)) {
+          setAllergies([...allergies, event.target.name]);
         }
-        else {
-            if (!(allergies.includes(event.target.name))) {
-                setAllergies([...allergies, event.target.name]);
-            }
-        }
+      }
     }
     //in case the user unchecks a checkbox
     else {
-        if (event.target.name == "other") {
-            //handle other allergies here
+      if (event.target.name == "other") {
+        //handle other allergies here
+      } else {
+        if (allergies.includes(event.target.name)) {
+          setAllergies(
+            [...allergies].filter((item) => {
+              return item !== event.target.name;
+            })
+          );
         }
-        else {
-            if ((allergies.includes(event.target.name))) {
-                setAllergies([...allergies].filter((item) => {
-                    return item !== event.target.name;
-                }));
-            }
-        }
+      }
     }
-  }
-
+  };
 
   const { state } = useLocation();
   const [diseasesFound, setDiseasesFound] = useState(state.diseasesFound);
-  console.log("diseases found = " + diseasesFound)
+  console.log("diseases found = " + diseasesFound);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentStudent, setCurrentStudent] = useState();
   const [height, setHeight] = useState(0);
-  const [weight, setWeight] = useState(0);
+  const [weight, setWeight] = useState();
   const [diseases, setDiseases] = useState([]);
   const [isValidated, setIsValidated] = useState(true);
   const [allergies, setAllergies] = useState([]);
@@ -49,396 +55,505 @@ function EditChildInfoPage() {
   const [contact2Relation, setContact2Relation] = useState();
   const [contact2FullName, setContact2FullName] = useState();
   const [contact2MobileNumber, setContact2MobileNumber] = useState();
+  const [isDepositModalShown, setIsDepositModalShown] = useState(false);
+  const [isAmountAddedModalShown, setIsAmountAddedModalShown] = useState(false);
+  const [addedAmount, setAddedAmount] = useState(0);
+  console.log(allergies);
+  console.log("current student data " + JSON.stringify(currentStudent));
+  const fetchStudentData = async () => {
+    const docRef = doc(db, "children", state.id);
+    const docSnap = await getDoc(docRef);
 
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  };
 
-  console.log(allergies)
-  return (
-    <div className="editChildInfoPageContainer">
-      <div className="pageHeader">
-        <div className="childImageNameContainer">
-          <div className="childImgContainer">
-            <img src={require("../assets/sampleBoyImage.png")} alt="" className='childImage'/>
-            <div className="imageOverlay">
+  const uploadStudentData = () => {
+    const newStudentData = {...currentStudent, height: height,
+    weight: weight, }
+  }
+
+  const initializeState = (val) => {
+    setHeight(val.height)
+    setWeight(val.weight)
+    setDiseasesFound(val.diseasesFound);
+    setDiseases(val.diseases);
+    setAllergies(val.allergies);
+
+    console.log("contacts: " + JSON.stringify(val.emergencyContacts))
+    val.emergencyContacts.forEach((contact, index) => {
+      if (index == 0) {
+        setContact1Relation(contact.relation);
+        setContact1FullName(contact.fullName);
+        setContact1MobileNumber(contact.mobileNumber);
+      } else if (index == 1) {
+        setContact2Relation(contact.relation);
+        setContact2FullName(contact.fullName);
+        setContact2MobileNumber(contact.mobileNumber);
+      }
+    })
+  }
+  useEffect(() => {
+    fetchStudentData().then((val) => {
+      setCurrentStudent(val);
+      initializeState(val);
+      setIsLoading(false);
+    }).catch((err) => {
+      console.log(err)
+    });
+
+  }, []);
+
+  useEffect(() => {
+    if (!diseasesFound) {
+      setDiseases("");
+    }
+  }, [diseasesFound])
+
+  return isLoading ? null : (
+    <div className="overallContainer">
+      {isDepositModalShown ? (
+        <div className="depositModal">
+          <DepositPopup
+            setIsDepositModalShown={setIsDepositModalShown}
+            setIsAmountAddedModalShown={setIsAmountAddedModalShown}
+            setAddedAmount={setAddedAmount}
+          />
+        </div>
+      ) : null}
+      {isAmountAddedModalShown ? (
+        <div className="depositModal">
+          <BalanceAddedModal
+            setIsAmountAddedModalShown={setIsAmountAddedModalShown}
+            addedAmount={addedAmount}
+          />
+        </div>
+      ) : null}
+      <div className="editChildInfoPageContainer">
+        <div className="pageHeader">
+          <div className="childImageNameContainer">
+            <div className="childImgContainer">
+              <img
+                src={require("../assets/sampleBoyImage.png")}
+                alt=""
+                className="childImage"
+              />
+              <div className="imageOverlay">
                 <img src={require("../assets/Camera.png")} alt="" />
+              </div>
             </div>
+            <p className="childName">{state.name}</p>
           </div>
-          <p className="childName">{state.name}</p>
+          <div className="childBalanceContainer">
+            <img src={require("../assets/coinImage.png")} alt="" />
+            <p className="childBalanceText">{state.balance} SR</p>
+            <img
+              src={require("../assets/addBalanceIconButton.png")}
+              alt=""
+              className="addBalanceIconButton"
+              onClick={() => {
+                setIsDepositModalShown(true);
+              }}
+            />
+          </div>
         </div>
-        <div className="childBalanceContainer">
-          <img src={require("../assets/coinImage.png")} alt="" />
-          <p className="childBalanceText">{state.balance} SR</p>
-          <img src={require("../assets/addBalanceIconButton.png")} alt="" className="addBalanceIconButton" />
-        </div>
-      </div>
-      <div className="inputContainer">
-        <p className="inputGroupHeader">Health Assets</p>
-        <div className="healthAssetsContainer">
-          <div className="genderAgeContainer labelInputContainer">
-            <div className="genderContainer">
-              <p className="inputLabel">Gender</p>
-              <input
-                type={"text"}
-                className="inputField numericInputField"
-                disabled
-                value={state.gender}
-              />
+        <div className="inputContainer">
+          <p className="inputGroupHeader">Health Assets</p>
+          <div className="healthAssetsContainer">
+            <div className="genderAgeContainer labelInputContainer">
+              <div className="genderContainer">
+                <p className="inputLabel">Gender</p>
+                <input
+                  type={"text"}
+                  className="inputField numericInputField"
+                  disabled
+                  value={state.gender}
+                />
 
-              {
-                //not needed
-                /* <select name="gender" id="gender" className='dropDownMenu'>
-                                <option value="" disabled selected>Select child gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select> */
-              }
-            </div>
-            <div className="ageContainer">
-              <p className="inputLabel">Age</p>
-              <input
-                type={"text"}
-                className="inputField numericInputField"
-                disabled
-                value={`${state.age} years`}
-              />
-              {/* 
+                {
+                  //not needed
+                  /* <select name="gender" id="gender" className='dropDownMenu'>
+                          <option value="" disabled selected>Select child gender</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                      </select> */
+                }
+              </div>
+              <div className="ageContainer">
+                <p className="inputLabel">Age</p>
+                <input
+                  type={"text"}
+                  className="inputField numericInputField"
+                  disabled
+                  value={`${state.age} years`}
+                />
+                {/* 
 Not Needed
-                            <select name="age" id="age" className='dropDownMenu'>
-                                <option value="" disabled selected>Select child age</option>
-                                <option value="male">5 Years</option>
-                                <option value="male">6 Years</option>
-                                <option value="female">7 Years</option>
-                                <option value="male">8 Years</option>
-                                <option value="female">9 Years</option>
-                                <option value="male">10 Years</option>
-                                <option value="female">11 Years</option>
-                                <option value="male">12 Years</option>
-                                <option value="female">13 Years</option>
-                            </select> */}
-            </div>
-          </div>
-          <div className="heightWeightContainer labelInputContainer">
-            <div className="genderContainer">
-              <p className="inputLabel">Height</p>
-              <div className="measurementInputContainer">
-              <input
-                type={"number"}
-                min={80}
-                className="inputField numericInputField"
-                onChange={(value) => {
-                  if (value < 80 || value > 160) {
-                    setIsValidated(false);
-                    setHeight(value);
-                  }
-                }}
-              />
-                <p className="measurementUnit">cm</p>
-
+                      <select name="age" id="age" className='dropDownMenu'>
+                          <option value="" disabled selected>Select child age</option>
+                          <option value="male">5 Years</option>
+                          <option value="male">6 Years</option>
+                          <option value="female">7 Years</option>
+                          <option value="male">8 Years</option>
+                          <option value="female">9 Years</option>
+                          <option value="male">10 Years</option>
+                          <option value="female">11 Years</option>
+                          <option value="male">12 Years</option>
+                          <option value="female">13 Years</option>
+                      </select> */}
               </div>
-   
             </div>
-            <div className="ageContainer">
-              <p className="inputLabel">Weight</p>
-              <div className="measurementInputContainer">
-              <input
-                type={"number"}
-                className="inputField numericInputField"
-                onChange={(value) => {
-                  setWeight(value);
-                }}
-              />
-              <p className="measurementUnit">kgs</p>
+            <div className="heightWeightContainer labelInputContainer">
+              <div className="genderContainer">
+                <p className="inputLabel">Height</p>
+                <div className="measurementInputContainer">
+                  <input
+                    type={"number"}
+                    
+                    value={height}
+                    className="inputField numericInputField"
+                    onChange={(event) => {
+                      const currentValue = event.target.value;
+                      if ((currentValue > 0 && currentValue < 200) || currentValue == "") {
+                        setHeight(currentValue);
+                      }
+                    }}
+                  />
+                  <p className="measurementUnit">cm</p>
+                </div>
               </div>
-
+              <div className="ageContainer">
+                <p className="inputLabel">Weight</p>
+                <div className="measurementInputContainer">
+                  <input
+                    type={"number"}
+                    value={weight}
+                    className="inputField numericInputField"
+                    onChange={(event) => {
+                      const currentValue = event.target.value;
+                      if ((currentValue > 0 && currentValue < 200) || currentValue == "") {
+                        setWeight(currentValue);
+                      }
+                    }}
+                  />
+                  <p className="measurementUnit">kgs</p>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="diseaseContainer labelInputContainer">
-            <div className="genderContainer">
-              <p className="inputLabel">Disease/s found</p>
-              <select
-                name="age"
-                id="age"
-                className="dropDownMenu diseaseDropdown"
-                onChange={(event) => {
+            <div className="diseaseContainer labelInputContainer">
+              <div className="diseasesContainer">
+                <p className="inputLabel">Disease/s found</p>
+                <select
+                  name="diseases"
+                  id="diseases"
+                  className="dropDownMenu diseaseDropdown"
+                  onChange={(event) => {
                     if (event.target.value == "no") {
-                        setDiseasesFound(false);
+                      setDiseasesFound(false);
+                    } else if (event.target.value == "yes") {
+                      setDiseasesFound(true);
                     }
-                    else if (event.target.value == "yes") {
-                        setDiseasesFound(true);
-                    }
-                }}
-              >
-                {diseasesFound ? (
-                  <option value="no">No</option>
-                ) : (
-                  <option value="no" selected>
-                    No
-                  </option>
-                )}
-                {diseasesFound ? (
-                  <option value="yes" selected>
-                    Yes
-                  </option>
-                ) : (
-                  <option value="yes">Yes</option>
-                )}
-              </select>
+                  }}
+                >
+                  {diseasesFound ? (
+                    <option value="no">No</option>
+                  ) : (
+                    <option value="no" selected>
+                      No
+                    </option>
+                  )}
+                  {diseasesFound ? (
+                    <option value="yes" selected>
+                      Yes
+                    </option>
+                  ) : (
+                    <option value="yes">Yes</option>
+                  )}
+                </select>
+              </div>
+              {diseasesFound ? (
+                <div className="diseasesContainer">
+                  <input
+                    type={"text"}
+                    value={diseases}
+                    className="inputField diseasesInput"
+                    placeholder="Ex: Blood Sugar"
+                    onChange={(event) => {
+                      setDiseases(event.target.value);
+                    }}
+                  />
+                </div>
+              ) : (
+                <div></div>
+              )}
             </div>
-            {
-            diseasesFound? <div className="ageContainer">
-              <input
-                type={"text"}
-                className="inputField diseasesInput"
-                placeholder="Ex: Blood Sugar"
-              />
-            </div> : <div></div>
-            
-            }
-          </div>
 
-          <div className="allergiesContainer labelInputContainer">
-            <div className="allergiesCol1">
-              <p className="inputLabel">Allergies</p>
-              <div className="allergyContainer upperCard">
-                <div className="checkboxContainer">
-                  <input
-                    type="checkbox"
-                    name="peanuts"
-                    className="checkboxInput"
-                    onChange={(event) => {
-                        handleCheckBoxEvents(event);
-                        console.log(event);
-                    }}
-                  />
-                </div>
-                <div className="allergyCardContainer">
-                  <div className="allergyIconContainer">
-                    <img src={require("../assets/peanuts.png")} alt="" />
-                  </div>
-                  <div className="allergyTextContainer">
-                    <p className="allergyText">Peanuts</p>
-                  </div>
-                </div>
-              </div>
-              <div className="allergyContainer">
-                <div className="checkboxContainer">
-                  <input
-                    type="checkbox"
-                    name="citrus"
-                    onChange={(event) => {
-                        handleCheckBoxEvents(event);
-                        console.log(event);
-                    }}
-                    className="checkboxInput"
-                  />
-                </div>
-                <div className="allergyCardContainer">
-                  <div className="allergyIconContainer">
-                    <img src={require("../assets/citrus.png")} alt="" />
-                  </div>
-                  <div className="allergyTextContainer">
-                    <p className="allergyText">Citrus</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="allergiesCol2">
-              <div className="allergyContainer upperCard">
-                <div className="checkboxContainer">
-                  <input
-                    type="checkbox"
-                    name="diary"
-                    onChange={(event) => {
-                        handleCheckBoxEvents(event);
-                        console.log(event);
-                    }}
-                    className="checkboxInput"
-                  />
-                </div>
-                <div className="allergyCardContainer">
-                  <div className="allergyIconContainer">
-                    <img src={require("../assets/diary.png")} alt="" />
-                  </div>
-                  <div className="allergyTextContainer">
-                    <p className="allergyText">Diary</p>
-                  </div>
-                </div>
-              </div>
-              <div className="allergyContainer">
-                <div className="checkboxContainer">
-                  <input
-                    type="checkbox"
-                    name="other"
-                    onChange={(event) => {
-                        handleCheckBoxEvents(event);
-                        console.log(event);
-                    }}
-                    className="checkboxInput"
-                  />
-                </div>
-                <div className="allergyCardContainer">
-                  <div className="allergyOtherInputContainer">
+            <div className="allergiesContainer labelInputContainer">
+              <div className="allergiesCol1">
+                <p className="inputLabel">Allergies</p>
+                <div className="allergyContainer upperCard">
+                  <div className="checkboxContainer">
                     <input
-                      type={"text"}
-                      className="inputField otherAlergies"
-                      placeholder="Other"
+                      type="checkbox"
+                      name="peanuts"
+                      className="checkboxInput"
+                      checked={allergies.includes("peanuts")}
+                      onChange={(event) => {
+                        handleCheckBoxEvents(event);
+                        console.log(event);
+                      }}
                     />
                   </div>
+                  <div className="allergyCardContainer">
+                    <div className="allergyIconContainer">
+                      <img src={require("../assets/peanuts.png")} alt="" />
+                    </div>
+                    <div className="allergyTextContainer">
+                      <p className="allergyText">Peanuts</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="allergyContainer">
+                  <div className="checkboxContainer">
+                    <input
+                      type="checkbox"
+                      checked={allergies.includes("citrus")}
+                      name="citrus"
+                      onChange={(event) => {
+                        handleCheckBoxEvents(event);
+                        console.log(event);
+                      }}
+                      className="checkboxInput"
+                    />
+                  </div>
+                  <div className="allergyCardContainer">
+                    <div className="allergyIconContainer">
+                      <img src={require("../assets/citrus.png")} alt="" />
+                    </div>
+                    <div className="allergyTextContainer">
+                      <p className="allergyText">Citrus</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="allergiesCol2">
+                <div className="allergyContainer upperCard">
+                  <div className="checkboxContainer">
+                    <input
+                      type="checkbox"
+                      name="diary"
+                      checked={allergies.includes("diary")}
+                      onChange={(event) => {
+                        handleCheckBoxEvents(event);
+                        console.log(event);
+                      }}
+                      className="checkboxInput"
+                    />
+                  </div>
+                  <div className="allergyCardContainer">
+                    <div className="allergyIconContainer">
+                      <img src={require("../assets/diary.png")} alt="" />
+                    </div>
+                    <div className="allergyTextContainer">
+                      <p className="allergyText">Diary</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="allergyContainer">
+                  <div className="checkboxContainer">
+                    <input
+                      type="checkbox"
+                      name="gluten"
+                      checked={allergies.includes("gluten")}
+                      onChange={(event) => {
+                        handleCheckBoxEvents(event);
+                      }}
+                      className="checkboxInput"
+                    />
+                  </div>
+                  <div className="allergyCardContainer">
+                    <div className="allergyIconContainer">
+                      <img src={require("../assets/gluten.png")} alt="" />
+                    </div>
+                    <div className="allergyTextContainer">
+                      <p className="allergyText">Gluten</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <p className="inputGroupHeader">School Assets</p>
-        <div className="schoolAssetsContainer">
-          <div className="gradeSectionContainer labelInputContainer">
-            <div className="gradeContainer">
-              <p className="inputLabel">Grade</p>
-              <input
-                type={"text"}
-                className="inputField numericInputField"
-                disabled
-                value={`Grade ${state.grade}`}
-              />
-              {/*
-              Not needed here
-              <select name="gender" id="gender" className="dropDownMenu">
-                <option value="" disabled selected>
-                  Select child gender
-                </option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select> */}
-            </div>
-            <div className="ageContainer">
-              <p className="inputLabel">Section</p>
-              <input
-                type={"text"}
-                className="inputField numericInputField"
-                disabled
-                value={state.section}
-              />
-              {/* 
-              Not Needed Here
-              <select name="age" id="age" className="dropDownMenu">
-                <option value="" disabled selected>
-                  Select child age
-                </option>
-                <option value="male">5 Years</option>
-                <option value="male">6 Years</option>
-                <option value="female">7 Years</option>
-                <option value="male">8 Years</option>
-                <option value="female">9 Years</option>
-                <option value="male">10 Years</option>
-                <option value="female">11 Years</option>
-                <option value="male">12 Years</option>
-                <option value="female">13 Years</option>
-              </select> */}
-            </div>
-          </div>
-          <div className="heightWeightContainer labelInputContainer">
-            <div className="genderContainer">
-              <p className="inputLabel">Supervisor</p>
-              <input
-                type={"text"}
-                className="inputField numericInputField"
-                disabled
-                value={state.supervisor}
-              />            </div>
-            <div className="ageContainer">
-              <p className="inputLabel">Department</p>
-              <input
-                type={"text"}
-                className="inputField numericInputField"
-                disabled
-                value={state.department}
-              />            </div>
-          </div>
-        </div>
-
-        <p className="inputGroupHeader">Emergency Contacts</p>
-        <div className="emergencyContactsContainer">
-          <div className="contactSectionContainer labelInputContainer">
-            <div className="contact1Container">
-              <p className="inputLabel">Contact 1</p>
-              <div className="contactInfoContainer">
-                <select
-                  name="contactRelation"
-                  id="contactRelation"
-                  className="dropDownMenu relationMenu"
-                  onChange={(event)=> {
-                    setContact1Relation(event.target.value);
-                  }}
-                >
-                  <option value="" disabled selected>
-                    Relation
-                  </option>
-                  <option value="Father">Father</option>
-                  <option value="Mother">Mother</option>
-                  <option value="Brother">Brother</option>
-                  <option value="Sister">Sister</option>
-                </select>
-
+          <p className="inputGroupHeader">School Assets</p>
+          <div className="schoolAssetsContainer">
+            <div className="gradeSectionContainer labelInputContainer">
+              <div className="gradeContainer">
+                <p className="inputLabel">Grade</p>
                 <input
                   type={"text"}
-                  className="inputField contactInput"
-                  placeholder="Full Name"
-                  onChange={(event) => {
-                    setContact1FullName(event.target.value);
-                  }}
+                  className="inputField numericInputField"
+                  disabled
+                  value={`Grade ${state.grade}`}
                 />
+                {/*
+        Not needed here
+        <select name="gender" id="gender" className="dropDownMenu">
+          <option value="" disabled selected>
+            Select child gender
+          </option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select> */}
+              </div>
+              <div className="ageContainer">
+                <p className="inputLabel">Section</p>
                 <input
-                  type={"tel"}
-                  className="inputField contactInput"
-                  placeholder="Mobile Number"
-                  onChange={(event) => {
-                    setContact1MobileNumber(event.target.value);
-                  }}
+                  type={"text"}
+                  className="inputField numericInputField"
+                  disabled
+                  value={state.section}
                 />
+                {/* 
+        Not Needed Here
+        <select name="age" id="age" className="dropDownMenu">
+          <option value="" disabled selected>
+            Select child age
+          </option>
+          <option value="male">5 Years</option>
+          <option value="male">6 Years</option>
+          <option value="female">7 Years</option>
+          <option value="male">8 Years</option>
+          <option value="female">9 Years</option>
+          <option value="male">10 Years</option>
+          <option value="female">11 Years</option>
+          <option value="male">12 Years</option>
+          <option value="female">13 Years</option>
+        </select> */}
               </div>
             </div>
-            <div className="contact2Container">
-              <p className="inputLabel">Contact 2</p>
-              <div className="contactInfoContainer">
-                <select
-                  name="contactRelation"
-                  id="contactRelation"
-                  className="dropDownMenu relationMenu"
-                  onChange={(event)=> {
-                    setContact2Relation(event.target.value);
-                  }}
-                >
-                  <option value="" disabled selected>
-                    Relation
-                  </option>
-                  <option value="Father">Father</option>
-                  <option value="Mother">Mother</option>
-                  <option value="Brother">Brother</option>
-                  <option value="Sister">Sister</option>
-                </select>
-
+            <div className="heightWeightContainer labelInputContainer">
+              <div className="genderContainer">
+                <p className="inputLabel">Supervisor</p>
                 <input
                   type={"text"}
-                  className="inputField contactInput"
-                  placeholder="Full Name"
-                  onChange={(event) => {
-                    setContact2FullName(event.target.value);
-                  }}
-                />
+                  className="inputField numericInputField"
+                  disabled
+                  value={state.supervisor}
+                />{" "}
+              </div>
+              <div className="ageContainer">
+                <p className="inputLabel">Department</p>
                 <input
-                  type={"tel"}
-                  className="inputField contactInput"
-                  placeholder="Mobile Number"
-                  onChange={(event) => {
-                    setContact2MobileNumber(event.target.value);
-                  }}
-                />
+                  type={"text"}
+                  className="inputField numericInputField"
+                  disabled
+                  value={state.department}
+                />{" "}
               </div>
             </div>
           </div>
-        </div>
-        <div className="flexButtonContainer">
-          <div className="saveButtonContainer">
-            <p className="saveText">Save</p>
+
+          <p className="inputGroupHeader">Emergency Contacts</p>
+          <div className="emergencyContactsContainer">
+            <div className="contactSectionContainer labelInputContainer">
+              <div className="contact1Container">
+                <p className="inputLabel">Contact 1</p>
+                <div className="contactInfoContainer">
+                  <select
+                    name="contactRelation"
+                    id="contactRelation"
+                    className="dropDownMenu relationMenu"
+                    value={contact1Relation}
+                    onChange={(event) => {
+                      setContact1Relation(event.target.value);
+                    }}
+                  >
+                    <option value="" disabled selected>
+                      Relation
+                    </option>
+                    <option value="father">Father</option>
+                    <option value="mother">Mother</option>
+                    <option value="brother">Brother</option>
+                    <option value="sister">Sister</option>
+                  </select>
+
+                  <input
+                    type={"text"}
+                    className="inputField contactInput"
+                    placeholder="Full Name"
+                    value={contact1FullName}
+                    onChange={(event) => {
+                      setContact1FullName(event.target.value);
+                    }}
+                  />
+                  <input
+                    type={"text"}
+                    value={contact1MobileNumber}
+                    className="inputField contactInput"
+                    placeholder="Mobile Number"
+                    onChange={(event) => {
+                      const mobileNumber = event.target.value;
+                      if (((Number(mobileNumber) || mobileNumber =="0") && (((mobileNumber.startsWith("05") && (mobileNumber.length > 1) || (mobileNumber.startsWith("0") && mobileNumber.length == 1)) && mobileNumber.length <= 10)) || mobileNumber == "")) {
+                        setContact1MobileNumber(mobileNumber);
+                      } 
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="contact2Container">
+                <p className="inputLabel">Contact 2</p>
+                <div className="contactInfoContainer">
+                  <select
+                    name="contact2Relation"
+                    id="contact2Relation"
+                    className="dropDownMenu relationMenu"
+                    value={contact2Relation}
+                    onChange={(event) => {
+                      setContact2Relation(event.target.value);
+                    }}
+                  >
+                    <option value="" disabled selected>
+                      Relation
+                    </option>
+                    <option value="father">Father</option>
+                    <option value="mother">Mother</option>
+                    <option value="brother">Brother</option>
+                    <option value="sister">Sister</option>
+                  </select>
+
+                  <input
+                    type={"text"}
+                    className="inputField contactInput"
+                    placeholder="Full Name"
+                    value={contact2FullName}
+                    onChange={(event) => {
+                      setContact2FullName(event.target.value);
+                    }}
+                  />
+                  <input
+                    type={"tel"}
+                    className="inputField contactInput"
+                    placeholder="Mobile Number"
+                    value={contact2MobileNumber}
+                    onChange={(event) => {
+                      const mobileNumber = event.target.value;
+                      if (((Number(mobileNumber) || mobileNumber =="0") && (((mobileNumber.startsWith("05") && (mobileNumber.length > 1) || (mobileNumber.startsWith("0") && mobileNumber.length == 1)) && mobileNumber.length <= 10)) || mobileNumber == "")) {
+                        setContact2MobileNumber(mobileNumber);
+                      } 
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flexButtonContainer">
+            <div className="saveButtonContainer">
+              <p className="saveText">Save</p>
+            </div>
           </div>
         </div>
       </div>

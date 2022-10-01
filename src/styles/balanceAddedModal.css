@@ -7,6 +7,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .balanceAmount {
@@ -30,4 +31,12 @@
     color: #0FB700;
     font-size: 42px;
     font-weight: bold;
+    text-align: center;
+}
+
+.balanceAdded-CloseIcon {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    cursor: pointer;
 }
