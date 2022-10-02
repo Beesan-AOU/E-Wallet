@@ -38,6 +38,7 @@
 .imgContainer{
     width: 132px;
     height: 154px;
+    margin-top: 30px;
     border-radius: 49px;
     overflow: hidden;
     border: black 1px solid;
@@ -77,25 +78,37 @@
 
 .searchInputField {
     width: 323px;
-    height: 60px;
+    height: 50px;
     background-color: #DDECFE;
     padding-left: 19px;
-    font-size: 30px;
+    font-size: 20px;
     border-radius: 13px;
     border: none;
+}
+
+.logoutTextContainer {
+    position: absolute;
+    right: 8px;
+    top: 10px;
+    cursor: pointer;
 }
 
 .searchContainer {
     display: flex;
     position: absolute;
-    top: 39px;
+    top: 48px;
     right: 8px;
 }
 
 .searchIconButton {
     margin-left: 12px;
+    width: 50px;
+    height: 50px;
 }
-
+.searchIconButton {
+    width: 50px;
+    height: 50px;
+}
 .mainContentContainer {
     display: flex;
     flex-direction: row;

@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LandingPageIllustration from '../components/landingPageIllustration';
 import '../styles/LandingPage.css';
 
 function LandingPage() {
     const navigation = useNavigate();
+
+    useEffect(() => {
+        window.localStorage.setItem("isLoggedIn", false);
+    }, [])
     return (
         <div className='landingPageContainer'>
             <img src={require("../assets/cloud_image.png")} alt="" className="cloudImage cloudImage1" />

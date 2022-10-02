@@ -9,11 +9,12 @@ import ReceiptItem from "../components/receiptItem";
 import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 import PopupStudentApprovalPage from "../components/popupStudentApprovalScreen";
 import LoadingScreen from "../components/LoadingScreen";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { async } from "@firebase/util";
 import SuccessfulPurchasePopup from "../components/successfulPurchasePopup";
 import PopupErrorMessage from "../components/popupErrorMessage";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { signOut } from "firebase/auth";
 
 
 function PurchasePage() {
@@ -30,6 +31,7 @@ function PurchasePage() {
   const [currentStudent, setCurrentStudent] = useState(state);
   const [errorHeading, setErrorHeading] = useState();
   const [errorMessage, setErrorMessage] = useState();
+  const navigate = useNavigate();
   let newStudentData = {}
 
   const fetchStudentData = () => {
@@ -38,7 +40,9 @@ function PurchasePage() {
   });
   }
 
-
+  const logout = async () => {
+    await signOut(auth);
+  }
 
   const handleSearch = async () => {
     const docRef = doc(db, "children", searchQuery);
@@ -174,7 +178,11 @@ function PurchasePage() {
       drinks: drinksProducts,
     };
   };
-
+  useEffect(() => {
+    if (!(window.localStorage.getItem("isLoggedIn") == "true")) {
+        navigate("/");
+    }
+} , [])
   useEffect(() => {
     fetchStudentData();
     fetchAllProducts()
@@ -233,6 +241,15 @@ function PurchasePage() {
         />
         <p className="availableBalance">{`${currentStudent.balance} SR`}</p>
       </div>
+      <div className="logoutTextContainer" onClick={()=> {
+        logout().then(val => {
+          navigate("/");
+        }).catch(err => {
+          console.log(err);
+        })
+      }}>
+      <p className="logoutText">Log out</p>
+      </div>
       <div className="searchContainer">
         <input
           type="text"
@@ -245,7 +262,7 @@ function PurchasePage() {
           }}
         />
         <div className="searchIconButton" onClick={handleSearch}>
-          <img src={require("../assets/searchIconButton.png")} alt="" />
+          <img src={require("../assets/searchIconButton.png")} alt="" className="searchIcon"/>
         </div>
       </div>
       <div className="headerContainer">

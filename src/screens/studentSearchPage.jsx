@@ -4,13 +4,22 @@ import "../styles/studentSearchPage.css";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../App';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function StudentSearchPage() {
 
     const navigate = useNavigate();
 
-    const handleSearch = async () => {
 
+
+    useEffect(() => {
+        if (!(window.localStorage.getItem("isLoggedIn") == "true")) {
+            navigate("/");
+        }
+    } , [])
+
+
+    const handleSearch = async () => {
         const docRef = doc(db, "children", studentID);
         const docSnap = await getDoc(docRef);
         

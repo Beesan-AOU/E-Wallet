@@ -1,3 +1,4 @@
+import { signOut } from "firebase/auth";
 import React, { Component } from "react";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -5,13 +6,18 @@ import "../styles/studentApprovalPage.css";
 function StudentApprovalPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
+
   const handleDecline = () => {
     navigate("/search");
   }
   const handleApproval = () => {
     navigate("/purchase", {state: state});
   }
-
+  useEffect(() => {
+    if (!(window.localStorage.getItem("isLoggedIn") == "true")) {
+        navigate("/");
+    }
+} , [])
   
 
   return (
@@ -26,7 +32,7 @@ function StudentApprovalPage() {
         alt=""
         className="approvalPageRightBgPart"
       />
-      <div className="mainContentContainer">
+      <div className="approvalMainContentContainer">
         <div className="studentImageContainer">
           <img src={require("../assets/sampleBoyImage.png")} alt="" className="studentImage"/>
         </div>
@@ -40,7 +46,7 @@ function StudentApprovalPage() {
 
         <div className="actionButtonsContainer">
             <div className="approvalActionButton approvalButton">
-                <p className="approvalActionButtonText" onClick={handleApproval}>Approval</p>
+                <p className="approvalActionButtonText" onClick={handleApproval}>Approve</p>
             </div>
             <div className="approvalActionButton declineButton" onClick={handleDecline}>
                 <p className="approvalActionButtonText">Decline</p>
