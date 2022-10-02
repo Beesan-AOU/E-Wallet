@@ -74,6 +74,53 @@ function PurchasePage() {
     return newStudentData;
   }
 
+  const itemHasRestrictedAllergy = (item) => {
+    console.log("current item is: " + JSON.stringify(item));
+    for(let j = 0; j < item.allergens.length; j++) {
+      let currentAllergy = item.allergens[j];
+      for(let k = 0; k < currentStudent.allergies.length; k++) {
+        let currentStudentAllergy = currentStudent.allergies[k];
+        if (currentAllergy == currentStudentAllergy) {
+          setErrorHeading("Careful!");
+          setErrorMessage(`${currentStudent.name} is not allowed to buy ${item.name} due to ${currentAllergy} allergy!`)
+          setErrorMessageShown(true);
+          setTimeout(() => {
+            setErrorMessageShown(false)
+          }, 5000);
+          console.log("not allowed due to " + currentAllergy + " allergy")
+          return true;
+        }
+        
+      }
+    }
+    return false;
+  }
+
+
+
+  const allergyFound = () => {
+    for(let i = 0; i < receiptItems.length; i++) {
+      let currentItem = receiptItems[i];
+      for(let j = 0; j < currentItem.allergens.length; j++) {
+        let currentAllergy = currentItem.allergens[j];
+        for(let k = 0; k < currentStudent.allergies.length; k++) {
+          let currentStudentAllergy = currentStudent.allergies[k];
+          if (currentAllergy == currentStudentAllergy) {
+            setErrorHeading("Careful!");
+            setErrorMessage(`${currentStudent.name} is not allowed to buy ${currentItem.itemName} due to ${currentAllergy} allergy!`)
+            setErrorMessageShown(true);
+            setTimeout(() => {
+              setErrorMessageShown(false)
+            }, 5000);
+            console.log("not allowed due to " + currentAllergy + " allergy")
+            return true;
+          }
+          
+        }
+      }
+    }
+    return false;
+  }
 
   const handleCheckout = () => {
     if (totalAmount > currentStudent.balance) {
@@ -94,34 +141,16 @@ function PurchasePage() {
       }, 5000);
       return;
     }
-    for(let i = 0; i < receiptItems.length; i++) {
-      let currentItem = receiptItems[i];
-      for(let j = 0; j < currentItem.allergens.length; j++) {
-        let currentAllergy = currentItem.allergens[j];
-        for(let k = 0; k < currentStudent.allergies.length; k++) {
-          let currentStudentAllergy = currentStudent.allergies[k];
-          if (currentAllergy == currentStudentAllergy) {
-            setErrorHeading("Careful!");
-            setErrorMessage(`${currentStudent.name} is not allowed to buy ${currentItem.itemName} due to ${currentAllergy} allergy!`)
-            setErrorMessageShown(true);
-            setTimeout(() => {
-              setErrorMessageShown(false)
-            }, 5000);
-            console.log("not allowed due to " + currentAllergy + " allergy")
-            return;
-          }
-          
-        }
-      }
+    if(!allergyFound()) {
+      successfulCheckout().then((val) => {
+        setIsOverlayLoading(false);
+        setSuccessfulPurchaseMsgShown(true);
+        setReceiptItems([]);
+        console.log("new data" + JSON.stringify(val))
+      }).catch((err) => {
+        console.log(err);
+      });
     }
-    successfulCheckout().then((val) => {
-      setIsOverlayLoading(false);
-      setSuccessfulPurchaseMsgShown(true);
-      setReceiptItems([]);
-      console.log("new data" + JSON.stringify(val))
-    }).catch((err) => {
-      console.log(err);
-    });
   }
 
 
@@ -262,6 +291,7 @@ function PurchasePage() {
                       setReceiptItems={setReceiptItems}
                       setTotalAmount={setTotalAmount}
                       rightMargin={23}
+                      itemHasRestrictedAllergy={itemHasRestrictedAllergy}
                     ></ProductCard>
                   );
                 }
@@ -272,6 +302,7 @@ function PurchasePage() {
                     receiptItems={receiptItems}
                     setReceiptItems={setReceiptItems}
                     setTotalAmount={setTotalAmount}
+                    itemHasRestrictedAllergy={itemHasRestrictedAllergy}
                   ></ProductCard>
                 );
               })}
@@ -292,6 +323,7 @@ function PurchasePage() {
                       setReceiptItems={setReceiptItems}
                       setTotalAmount={setTotalAmount}
                       rightMargin={23}
+                      itemHasRestrictedAllergy={itemHasRestrictedAllergy}
                     ></ProductCard>
                   );
                 }
@@ -302,6 +334,7 @@ function PurchasePage() {
                     receiptItems={receiptItems}
                     setReceiptItems={setReceiptItems}
                     setTotalAmount={setTotalAmount}
+                    itemHasRestrictedAllergy={itemHasRestrictedAllergy}
                   ></ProductCard>
                 );
               })}
@@ -322,6 +355,7 @@ function PurchasePage() {
                       setReceiptItems={setReceiptItems}
                       setTotalAmount={setTotalAmount}
                       rightMargin={23}
+                      itemHasRestrictedAllergy={itemHasRestrictedAllergy}
                     ></ProductCard>
                   );
                 }
@@ -332,6 +366,7 @@ function PurchasePage() {
                     receiptItems={receiptItems}
                     setReceiptItems={setReceiptItems}
                     setTotalAmount={setTotalAmount}
+                    itemHasRestrictedAllergy={itemHasRestrictedAllergy}
                   ></ProductCard>
                 );
               })}

@@ -16,7 +16,7 @@ function ProductCard(props) {
     const { setReceiptItems } = props;
     const { setTotalAmount } = props;
     const {rightMargin} = props;
-
+    const {itemHasRestrictedAllergy} = props;
 
 
 
@@ -61,40 +61,44 @@ function ProductCard(props) {
 
             </div>
             <div className="addToCartButton" onClick={()=> {
-                let itemFound = false;
-                let newArray = [];
-                for (let i = 0; i < receiptItems.length; i++) {
-                    let tempItem = receiptItems[i];
-                    if (tempItem.itemName == productData.name) {
-                        itemFound = true;
-                        let newQuantity = quantity + tempItem.quantity;
+                if (!itemHasRestrictedAllergy(productData)) {
+                    let itemFound = false;
+                    let newArray = [];
+    
+                    for (let i = 0; i < receiptItems.length; i++) {
+                        let tempItem = receiptItems[i];
+                        if (tempItem.itemName == productData.name) {
+                            itemFound = true;
+                            let newQuantity = quantity + tempItem.quantity;
+                            let itemMap = {
+                                quantity: newQuantity,
+                                itemName: productData.name,
+                                totalPrice: newQuantity * productData.price,
+                                allergens: productData.allergens,
+                                image: productData.image
+                            }
+                            newArray = [...receiptItems, itemMap].filter((reduceItem) => {
+                                return reduceItem != tempItem;
+                            })
+                        }
+                    }
+                    if (!itemFound) {
                         let itemMap = {
-                            quantity: newQuantity,
+                            quantity: quantity,
                             itemName: productData.name,
-                            totalPrice: newQuantity * productData.price,
+                            totalPrice: quantity * productData.price,
                             allergens: productData.allergens,
                             image: productData.image
                         }
-                        newArray = [...receiptItems, itemMap].filter((reduceItem) => {
-                            return reduceItem != tempItem;
-                        })
+                        newArray = [...receiptItems, itemMap]
+                        
                     }
+                    setReceiptItems(newArray);
+                    computeTotal(newArray, setTotalAmount);
+                    window.scrollTo(0, 0)
                 }
-                if (!itemFound) {
-                    let itemMap = {
-                        quantity: quantity,
-                        itemName: productData.name,
-                        totalPrice: quantity * productData.price,
-                        allergens: productData.allergens,
-                        image: productData.image
-                    }
-                    newArray = [...receiptItems, itemMap]
-                    
                 }
-                setReceiptItems(newArray);
-                computeTotal(newArray, setTotalAmount);
-                window.scrollTo(0, 0)
-            }}>
+}>
                 <p className="productAddToCartText">Add To Cart</p>
             </div>
         </div>
