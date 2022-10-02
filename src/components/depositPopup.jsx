@@ -65,6 +65,9 @@ function DepositPopup(props) {
 
     }}>
     <div className="depositPopupContainer">
+      <img src={require("../assets/closeIcon.png")} alt="" className="depositCloseIcon" onClick={() => {
+        setIsDepositModalShown(false);
+      }}/>
       <div className="depositLeftPartContainer">
           <div className="depositAmountContainer">
             <p className="depositAmountTitle">Amount</p>

@@ -49,6 +49,7 @@
     font-weight: 500;
     color: #FF0000;
     font-size: 22px;
+    cursor: pointer;
 }
 
 .footerText {

@@ -9,7 +9,7 @@ import "../styles/parentHomePage.css";
 import { doc, getDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { prodErrorMap } from "firebase/auth";
+import { prodErrorMap, signOut } from "firebase/auth";
 import {
   collection,
   query,
@@ -37,7 +37,10 @@ function ParentHomePage() {
       console.log("user data not on database");
     }
   };
-  
+  const logout = async () => {
+    await signOut(auth);
+  }
+
   const fetchChildren = async (childrenArray) => {
     var tempChildrenArray = [];
     console.log("children " + JSON.stringify(childrenArray));
@@ -109,7 +112,15 @@ function ParentHomePage() {
       </h1>
     </div>
   </div>
-  <p className="logoutText">Log out</p>
+  <p className="logoutText" onClick={
+    () => {
+      logout().then(val => {
+        navigate("/");
+      }).catch(err => {
+        console.log(err);
+      })
+    }
+  }>Log out</p>
 </div>
 {
   children.map((childData) => {
@@ -118,7 +129,8 @@ function ParentHomePage() {
           <ChildCard childData={childData} key={childData.id} setIsPurchaseHistoryShown={setIsPurchaseHistoryShown} setHistoryChildData={setHistoryChildData}/>
       )
   })
-}     
+}    
+ 
 </div>
 <AdsSection />
 <div className="footerContainer">
