@@ -54,7 +54,7 @@ function App() {
 
           <Route path="/search" element={<StudentSearchPage />} />
         
-          <Route path="/approval" element={<StudentApprovalPage />} />
+          <Route path="/approval/:studentID" element={<StudentApprovalPage />} />
 
           <Route path="/testing" element={<ComponentTesting />} />
 

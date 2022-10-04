@@ -1,26 +1,57 @@
 import { signOut } from "firebase/auth";
 import React, { Component } from "react";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../styles/studentApprovalPage.css";
-function StudentApprovalPage() {
-  const { state } = useLocation();
-  const navigate = useNavigate();
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../App";
+import { useState } from "react";
 
+
+
+function StudentApprovalPage() {
+  const { studentID } = useParams();
+  const navigate = useNavigate();
+  const [studentInfo, setStudentInfo] = useState({});
+  const [isNotFound, setIsNotFound] = useState(false);
+  const [name, setName] = useState("Mohammed");
+  const [isLoading, setIsLoading] = useState(false);
+  const fetchStudentInfo = async () => {
+    const docRef = doc(db, "children", studentID);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("doc exists")
+      setStudentInfo(docSnap.data());
+      console.log("doc data is " + JSON.stringify(docSnap.data()))
+      return(docSnap.data())
+    } else {
+      setIsNotFound(true);
+    }
+}
   const handleDecline = () => {
     navigate("/search");
   }
   const handleApproval = () => {
-    navigate("/purchase", {state: state});
+    navigate("/purchase", {state: studentInfo});
   }
   useEffect(() => {
+    setIsLoading(true);
+    fetchStudentInfo().then(res => {
+      setIsLoading(false);
+      console.log("studentInfo is: " + JSON.stringify(res));
+      setName({test: "hello"});
+      console.log("studentInfo is: " + JSON.stringify(studentInfo));
+
+    }).catch(err => {
+      console.log(err);
+    })
+    console.log("studentID is " + studentID)
     if (!(window.localStorage.getItem("isLoggedIn") == "true")) {
         navigate("/");
     }
 } , [])
-  
-
   return (
+    isLoading? null:
     <div className="studentApprovalPageContainer">
       <img
         src={require("../assets/approvalPageLeftBgPart.png")}
@@ -36,12 +67,12 @@ function StudentApprovalPage() {
         <div className="studentImageContainer">
           <img src={require("../assets/sampleBoyImage.png")} alt="" className="studentImage"/>
         </div>
-        <p className="approvalStudentName">{state.name}</p>
+        <p className="approvalStudentName">{studentInfo.name}</p>
         <input
           type={"text"}
           className="inputField approvalInputField"
           disabled
-          value={state.id}
+          value={studentID}
         />
 
         <div className="actionButtonsContainer">
