@@ -3,11 +3,14 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import DepositPopup from "../components/depositPopup";
 import BalanceAddedModal from "../components/balanceAddedModal";
+import { HiZoomIn } from "react-icons/hi";
+import { HiZoomOut } from "react-icons/hi";
 
 import "../styles/editChildInfoPage.css";
 import { useEffect } from "react";
 import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../App";
+import AvatarEditor from "react-avatar-editor";
 
 function EditChildInfoPage() {
   const handleCheckBoxEvents = (event) => {
@@ -47,6 +50,7 @@ function EditChildInfoPage() {
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState();
   const [diseases, setDiseases] = useState([]);
+  const [zoomValue, setZoomValue] = useState(1);
   const [isValidated, setIsValidated] = useState(true);
   const [allergies, setAllergies] = useState([]);
   const [otherAllergies, setOtherAllergies] = useState();
@@ -59,6 +63,8 @@ function EditChildInfoPage() {
   const [isDepositModalShown, setIsDepositModalShown] = useState(false);
   const [isAmountAddedModalShown, setIsAmountAddedModalShown] = useState(false);
   const [addedAmount, setAddedAmount] = useState(0);
+  const [isAvatarEditorShown, setIsAvatarEditorShown] = useState(false);
+  const [selectedImage, setSelectedImage] = useState();
   console.log(allergies);
   console.log("current student data " + JSON.stringify(currentStudent));
   const fetchStudentData = async () => {
@@ -73,33 +79,37 @@ function EditChildInfoPage() {
   };
 
   const uploadStudentData = async () => {
-    const newStudentData = {...currentStudent, height: height,
-    weight: weight, diseasesFound: diseasesFound, diseases: diseases, allergies: allergies, emergencyContacts: [
-      {
-        fullName: contact1FullName,
-        mobileNumber: contact1MobileNumber,
-        relation: contact1Relation
-      },
-      {
-        fullName: contact2FullName,
-        mobileNumber: contact2MobileNumber,
-        relation: contact2Relation
-      }
-    ]
-  }
-  await setDoc(doc(db, "children", state.id), newStudentData);
-
-
-  }
+    const newStudentData = {
+      ...currentStudent,
+      height: height,
+      weight: weight,
+      diseasesFound: diseasesFound,
+      diseases: diseases,
+      allergies: allergies,
+      emergencyContacts: [
+        {
+          fullName: contact1FullName,
+          mobileNumber: contact1MobileNumber,
+          relation: contact1Relation,
+        },
+        {
+          fullName: contact2FullName,
+          mobileNumber: contact2MobileNumber,
+          relation: contact2Relation,
+        },
+      ],
+    };
+    await setDoc(doc(db, "children", state.id), newStudentData);
+  };
 
   const initializeState = (val) => {
-    setHeight(val.height)
-    setWeight(val.weight)
+    setHeight(val.height);
+    setWeight(val.weight);
     setDiseasesFound(val.diseasesFound);
     setDiseases(val.diseases);
     setAllergies(val.allergies);
     setStudentBalance(val.balance);
-    console.log("contacts: " + JSON.stringify(val.emergencyContacts))
+    console.log("contacts: " + JSON.stringify(val.emergencyContacts));
     val.emergencyContacts.forEach((contact, index) => {
       if (index == 0) {
         setContact1Relation(contact.relation);
@@ -110,31 +120,79 @@ function EditChildInfoPage() {
         setContact2FullName(contact.fullName);
         setContact2MobileNumber(contact.mobileNumber);
       }
-    })
-  }
-  useEffect(() => {
-    fetchStudentData().then((val) => {
-      setCurrentStudent(val);
-      initializeState(val);
-      setIsLoading(false);
-    }).catch((err) => {
-      console.log(err)
     });
-
+  };
+  useEffect(() => {
+    fetchStudentData()
+      .then((val) => {
+        setCurrentStudent(val);
+        initializeState(val);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
     if (!diseasesFound) {
       setDiseases("");
     }
-  }, [diseasesFound])
+  }, [diseasesFound]);
 
   return isLoading ? null : (
     <div className="overallContainer">
+      {isAvatarEditorShown ? (
+        <div className="avatarEditorContainer">
+          <div className="avatarEditorContent">
+            <p className="editingImageText">Editing Image</p>
+            <div className="sectionDivider"></div>
+            <div className="avatarEditor">
+              <AvatarEditor
+                image={selectedImage}
+                width={250}
+                height={250}
+                border={50}
+                color={[0, 0, 0, 0.6]} // RGBA
+                scale={zoomValue}
+                rotate={0}
+              />
+
+              <div className="inputSliderContainer">
+                <HiZoomIn size={30} />
+                <input
+                  type="range"
+                  min={"0.05"}
+                  max={"2"}
+                  step={"0.01"}
+                  orient="vertical"
+                  onChange={(event) => {
+                    setZoomValue(event.target.value);
+                  }}
+                />
+                <HiZoomOut size={30} />
+              </div>
+            </div>
+
+            <div className="optionsRow">
+              <div className="cancelButtonContainer optionButtonContainer" onClick={() => {
+                setIsAvatarEditorShown(false);
+                setZoomValue(1);
+                setSelectedImage("");
+              }}>
+                <p className="optionButtonText">Cancel</p>
+              </div>
+              <div className="confirmButtonContainer optionButtonContainer">
+                <p className="optionButtonText">Confirm</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
       {isDepositModalShown ? (
         <div className="depositModal">
           <DepositPopup
-            studentID = {state.id}
+            studentID={state.id}
             setIsDepositModalShown={setIsDepositModalShown}
             setIsAmountAddedModalShown={setIsAmountAddedModalShown}
             setAddedAmount={setAddedAmount}
@@ -162,11 +220,30 @@ function EditChildInfoPage() {
                 alt=""
                 className="childImage"
               />
+
               <div className="imageOverlay">
-                <img src={require("../assets/Camera.png")} alt="" />
+                <input
+                  id="file-input"
+                  type="file"
+                  value={null}
+                  name="myImage"
+                  accept="image/png, image/jpeg"
+                  className="tempImageFile"
+                  onClick={(event)=> { 
+                    event.target.value = null
+               }}
+                  onChange={(event) => {
+                    setIsAvatarEditorShown(true);
+                    console.log("file is " + event.target.files[0]);
+                    setSelectedImage(event.target.files[0]);
+                  }}
+                />
+                <label for="file-input" className="fileLabel imageOverlay">
+                  <img src={require("../assets/Camera.png")} alt="" />
+                </label>
               </div>
             </div>
-            <p className="childName">{state.name}</p>
+            <p className="childName_Edit">{state.name}</p>
           </div>
           <div className="childBalanceContainer">
             <img src={require("../assets/coinImage.png")} alt="" />
@@ -233,12 +310,14 @@ Not Needed
                 <div className="measurementInputContainer">
                   <input
                     type={"number"}
-                    
                     value={height}
                     className="inputField numericInputField"
                     onChange={(event) => {
                       const currentValue = event.target.value;
-                      if ((currentValue > 0 && currentValue < 200) || currentValue == "") {
+                      if (
+                        (currentValue > 0 && currentValue < 200) ||
+                        currentValue == ""
+                      ) {
                         setHeight(currentValue);
                       }
                     }}
@@ -255,7 +334,10 @@ Not Needed
                     className="inputField numericInputField"
                     onChange={(event) => {
                       const currentValue = event.target.value;
-                      if ((currentValue > 0 && currentValue < 200) || currentValue == "") {
+                      if (
+                        (currentValue > 0 && currentValue < 200) ||
+                        currentValue == ""
+                      ) {
                         setWeight(currentValue);
                       }
                     }}
@@ -383,7 +465,7 @@ Not Needed
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="allergyContainer">
                   <div className="checkboxContainer">
                     <input
@@ -517,9 +599,17 @@ Not Needed
                     placeholder="Mobile Number"
                     onChange={(event) => {
                       const mobileNumber = event.target.value;
-                      if (((Number(mobileNumber) || mobileNumber =="0") && (((mobileNumber.startsWith("05") && (mobileNumber.length > 1) || (mobileNumber.startsWith("0") && mobileNumber.length == 1)) && mobileNumber.length <= 10)) || mobileNumber == "")) {
+                      if (
+                        ((Number(mobileNumber) || mobileNumber == "0") &&
+                          ((mobileNumber.startsWith("05") &&
+                            mobileNumber.length > 1) ||
+                            (mobileNumber.startsWith("0") &&
+                              mobileNumber.length == 1)) &&
+                          mobileNumber.length <= 10) ||
+                        mobileNumber == ""
+                      ) {
                         setContact1MobileNumber(mobileNumber);
-                      } 
+                      }
                     }}
                   />
                 </div>
@@ -561,22 +651,35 @@ Not Needed
                     value={contact2MobileNumber}
                     onChange={(event) => {
                       const mobileNumber = event.target.value;
-                      if (((Number(mobileNumber) || mobileNumber =="0") && (((mobileNumber.startsWith("05") && (mobileNumber.length > 1) || (mobileNumber.startsWith("0") && mobileNumber.length == 1)) && mobileNumber.length <= 10)) || mobileNumber == "")) {
+                      if (
+                        ((Number(mobileNumber) || mobileNumber == "0") &&
+                          ((mobileNumber.startsWith("05") &&
+                            mobileNumber.length > 1) ||
+                            (mobileNumber.startsWith("0") &&
+                              mobileNumber.length == 1)) &&
+                          mobileNumber.length <= 10) ||
+                        mobileNumber == ""
+                      ) {
                         setContact2MobileNumber(mobileNumber);
-                      } 
+                      }
                     }}
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flexButtonContainer" onClick={() => {
-              uploadStudentData().then((res) => {
-                navigation("/home");
-              }).catch((error) => {
-                console.log(error);
-              })
-            }}>
+          <div
+            className="flexButtonContainer"
+            onClick={() => {
+              uploadStudentData()
+                .then((res) => {
+                  navigation("/home");
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }}
+          >
             <div className="saveButtonContainer">
               <p className="saveText">Save</p>
             </div>
