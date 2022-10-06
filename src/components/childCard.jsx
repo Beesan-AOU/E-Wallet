@@ -30,7 +30,9 @@ function ChildCard(props) {
             />
           )
          : (
-          <div className="childImageContainer"></div>
+          <div className="childImageContainer">
+            <img src={childData.image} alt="" className="childImageContainer" />
+          </div>
         )}
       </div>
       <div className="parent-actionButtonsContainer">

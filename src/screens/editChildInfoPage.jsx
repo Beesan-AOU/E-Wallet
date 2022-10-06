@@ -8,11 +8,16 @@ import { HiZoomOut } from "react-icons/hi";
 
 import "../styles/editChildInfoPage.css";
 import { useEffect } from "react";
+
 import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../App";
+
 import AvatarEditor from "react-avatar-editor";
 
 function EditChildInfoPage() {
+  var editor = "";
+  
+
   const handleCheckBoxEvents = (event) => {
     //in case the user checks a checkbox
     if (event.target.checked) {
@@ -39,9 +44,29 @@ function EditChildInfoPage() {
       }
     }
   };
+  const setEditorRef = (ed) => {
+    editor = ed;
+  };
 
+  const handleSave = (e) => {
+    if (setEditorRef) {
+      const canvasScaled = editor.getImageScaledToCanvas();
+      const tempCroppedImg = canvasScaled.toDataURL();
+      console.log("URL is " + croppedImg);
+      setCroppedImg(tempCroppedImg);
+      setIsAvatarEditorShown(false);
+    }
+  };
+  // const [picture, setPicture] = useState({
+  //   cropperOpen: false,
+  //   img: null,
+  //   zoom: 2,
+  //   croppedImg:
+  //     "https://upload.wikimedia.org/wikipedia/commons/0/09/Man_Silhouette.png"
+  // });
   const { state } = useLocation();
   const navigation = useNavigate();
+  const [croppedImg, setCroppedImg] = useState("");
   const [diseasesFound, setDiseasesFound] = useState(state.diseasesFound);
   console.log("diseases found = " + diseasesFound);
   const [isLoading, setIsLoading] = useState(true);
@@ -83,6 +108,7 @@ function EditChildInfoPage() {
       ...currentStudent,
       height: height,
       weight: weight,
+      image: croppedImg,
       diseasesFound: diseasesFound,
       diseases: diseases,
       allergies: allergies,
@@ -156,6 +182,7 @@ function EditChildInfoPage() {
                 color={[0, 0, 0, 0.6]} // RGBA
                 scale={zoomValue}
                 rotate={0}
+                ref={setEditorRef}
               />
 
               <div className="inputSliderContainer">
@@ -182,7 +209,9 @@ function EditChildInfoPage() {
               }}>
                 <p className="optionButtonText">Cancel</p>
               </div>
-              <div className="confirmButtonContainer optionButtonContainer">
+              <div className="confirmButtonContainer optionButtonContainer" onClick={(event)=> {
+                handleSave();
+              }}>
                 <p className="optionButtonText">Confirm</p>
               </div>
             </div>
@@ -216,7 +245,7 @@ function EditChildInfoPage() {
           <div className="childImageNameContainer">
             <div className="childImgContainer">
               <img
-                src={require("../assets/sampleBoyImage.png")}
+                src={croppedImg != ""? croppedImg: currentStudent.image != ""? currentStudent.image: currentStudent.gender == "male"? require("../assets/default-boy-image.png"): require("../assets/default-girl-image.png")}
                 alt=""
                 className="childImage"
               />
@@ -225,16 +254,16 @@ function EditChildInfoPage() {
                 <input
                   id="file-input"
                   type="file"
-                  value={null}
+                  // value={null}
                   name="myImage"
                   accept="image/png, image/jpeg"
                   className="tempImageFile"
-                  onClick={(event)=> { 
-                    event.target.value = null
-               }}
+              //     onClick={(event)=> { 
+              //       event.target.value = null
+              //  }}
                   onChange={(event) => {
                     setIsAvatarEditorShown(true);
-                    console.log("file is " + event.target.files[0]);
+                    console.log("file is " + JSON.stringify(event.target.files[0]));
                     setSelectedImage(event.target.files[0]);
                   }}
                 />

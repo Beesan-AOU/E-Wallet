@@ -43,9 +43,10 @@
 .childImageContainer {
     width: 13vw;
     height: 100%;
-    background-image: url("../assets/sampleBoyImage.png");
     background-size: cover;
 }
+
+
 
 .homeIcon {
     width: 4.3vw;

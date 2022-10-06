@@ -12,6 +12,7 @@ import LoginScreen from "./screens/loginPage";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage, ref } from "firebase/storage";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import StudentSearchPage from "./screens/studentSearchPage";
 import StudentApprovalPage from "./screens/studentApprovalPage";
@@ -37,6 +38,7 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage();
 
 function App() {
   return (

@@ -36,7 +36,7 @@
 }
 
 .imgContainer{
-    width: 132px;
+    width: 140px;
     height: 154px;
     margin-top: 30px;
     border-radius: 49px;
@@ -85,6 +85,13 @@
     border-radius: 13px;
     border: none;
 }
+.purchase-childImage {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
 
 .logoutTextContainer {
     position: absolute;

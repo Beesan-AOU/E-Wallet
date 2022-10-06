@@ -269,9 +269,9 @@ function PurchasePage() {
         <div className="childInfoContainer">
           <div className="imgContainer">
             <img
-              src={require("../assets/sampleBoyImage.png")}
+              src={currentStudent.image != ""? currentStudent.image: currentStudent.gender == "male"? require("../assets/default-boy-image.png"): require("../assets/default-girl-image.png")}
               alt=""
-              className="childImage"
+              className="purchase-childImage"
             />
           </div>
           <div className="otherInfoContainer">

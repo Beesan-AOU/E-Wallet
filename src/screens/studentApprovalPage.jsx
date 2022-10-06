@@ -65,7 +65,7 @@ function StudentApprovalPage() {
       />
       <div className="approvalMainContentContainer">
         <div className="studentImageContainer">
-          <img src={require("../assets/sampleBoyImage.png")} alt="" className="studentImage"/>
+          <img src={studentInfo.image != ""? studentInfo.image: studentInfo.gender == "male"? require("../assets/default-boy-image.png"): require("../assets/default-girl-image.png")} alt="" className="studentImage"/>
         </div>
         <p className="approvalStudentName">{studentInfo.name}</p>
         <input
