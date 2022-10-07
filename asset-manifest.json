@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/E-Wallet/static/css/main.e92b9e3f.css",
+    "main.css": "/E-Wallet/static/css/main.43efa97b.css",
     "main.js": "/E-Wallet/static/js/main.faa74953.js",
     "static/js/787.96d8fdb7.chunk.js": "/E-Wallet/static/js/787.96d8fdb7.chunk.js",
     "static/media/landingBackgroundCircle.png": "/E-Wallet/static/media/landingBackgroundCircle.33ab68defd7e73d1e6bc.png",
@@ -22,12 +22,12 @@
     "static/media/instagramLogo.png": "/E-Wallet/static/media/instagramLogo.f566158b41944640e5c1.png",
     "static/media/logo.svg": "/E-Wallet/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/E-Wallet/index.html",
-    "main.e92b9e3f.css.map": "/E-Wallet/static/css/main.e92b9e3f.css.map",
+    "main.43efa97b.css.map": "/E-Wallet/static/css/main.43efa97b.css.map",
     "main.faa74953.js.map": "/E-Wallet/static/js/main.faa74953.js.map",
     "787.96d8fdb7.chunk.js.map": "/E-Wallet/static/js/787.96d8fdb7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e92b9e3f.css",
+    "static/css/main.43efa97b.css",
     "static/js/main.faa74953.js"
   ]
 }
