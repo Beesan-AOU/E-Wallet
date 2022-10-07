@@ -3,7 +3,7 @@ import "./App.css";
 import InputField from "./components/inputField";
 import LandingPageIllustration from "./components/landingPageIllustration";
 import CallToActionButton from "./components/callToActionButton";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, HashRouter, Route, Routes } from "react-router-dom";
 import LandingPage from "./screens/LandingPage";
 import UserChoicePage from "./screens/userChoicePage";
 import ParentHomePage from "./screens/parentHomePage";
@@ -44,7 +44,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Routes>
+        <HashRouter>
           <Route path="/" element={<LandingPage />} />
           <Route path="/choice" element={<UserChoicePage />} />
 
@@ -62,7 +62,7 @@ function App() {
 
           <Route path="/purchase" element={<PurchasePage />} />
 
-        </Routes>
+        </HashRouter>
 
       </div>
     </Router>
