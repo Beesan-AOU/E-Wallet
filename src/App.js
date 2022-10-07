@@ -3,7 +3,7 @@ import "./App.css";
 import InputField from "./components/inputField";
 import LandingPageIllustration from "./components/landingPageIllustration";
 import CallToActionButton from "./components/callToActionButton";
-import { BrowserRouter as Router, HashRouter, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, HashRouter, Route, Routes } from "react-router-dom";
 import LandingPage from "./screens/LandingPage";
 import UserChoicePage from "./screens/userChoicePage";
 import ParentHomePage from "./screens/parentHomePage";
@@ -42,10 +42,10 @@ export const storage = getStorage();
 
 function App() {
   return (
-    <Router basename="/E-Wallet">
+    <Router>
       <div className="App">
         <Routes>
-          <Route path="/E-Wallet" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/choice" element={<UserChoicePage />} />
 
           <Route path="/home" element={<ParentHomePage />} />
