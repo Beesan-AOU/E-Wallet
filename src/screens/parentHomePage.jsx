@@ -65,36 +65,41 @@ function ParentHomePage() {
     if (window.localStorage.getItem("accountType") == "school") {
       navigate("/search");
     }
-
-    fetchUserData(user)
-      .then((fetchedUserData) => {
-        //user data exists therefore we have to check the user type and navigate to the appropriate screen\
-        if (fetchedUserData.userType == "parent") {
-          setUserData(fetchedUserData);
-          fetchChildren(fetchedUserData.children)
-            .then((sucess) => {
-              setIsLoading(false);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-          // //   .then((fetchedChildrenData) => {
-          // //     setChildren(fetchedChildrenData);
-          // //     console.log("fetched childrens" + JSON.stringify(fetchedChildrenData))
-          // //     setIsLoading(false);
-          //   })
-          //   .catch((err) => {
-          //     console.log(err);
-          //   });
-        } else if (fetchedUserData.userType == "school") {
-          navigate("/search");
-        }
-        //debugging message
-        console.log("Document data:", fetchedUserData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log("hello");
+    const user = auth.currentUser;
+    if (user) {
+      fetchUserData(user)
+        .then((fetchedUserData) => {
+          //user data exists therefore we have to check the user type and navigate to the appropriate screen\
+          if (fetchedUserData.userType == "parent") {
+            setUserData(fetchedUserData);
+            fetchChildren(fetchedUserData.children)
+              .then((sucess) => {
+                setIsLoading(false);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            // //   .then((fetchedChildrenData) => {
+            // //     setChildren(fetchedChildrenData);
+            // //     console.log("fetched childrens" + JSON.stringify(fetchedChildrenData))
+            // //     setIsLoading(false);
+            //   })
+            //   .catch((err) => {
+            //     console.log(err);
+            //   });
+          } else if (fetchedUserData.userType == "school") {
+            navigate("/search");
+          }
+          //debugging message
+          console.log("Document data:", fetchedUserData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      navigate("/");
+    }
   }, []);
 
   return isLoading ? (

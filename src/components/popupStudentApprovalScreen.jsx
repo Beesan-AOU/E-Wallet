@@ -9,7 +9,7 @@ function PopupStudentApprovalPage(props) {
     }
 
     const handleApprove = () => {
-        navigate("/purchase", {state: props.newStudentData});
+        navigate("/purchase", {state: props.approvalModalData});
         props.setApprovalModalShown(false);
 
     }
@@ -22,18 +22,18 @@ function PopupStudentApprovalPage(props) {
             <img src={require("../assets/popupSearchApprpvalPageRightBgPart.png")} alt="" className="popupRightBgPart" />
             <div className="popupMainContentContainer">
                 <div className="popupChildImageContainer">
-                    <img src={require("../assets/sampleBoyImage.png")} alt="" className="popupChildImage" />
+                    <img src={props.approvalModalData.image != ""? props.approvalModalData.image: props.approvalModalData.gender == "male"? require("../assets/default-boy-image.png"): require("../assets/default-girl-image.png")} alt="" className="popupChildImage" />
                 </div>
-                <p className="popupChildName">Ahmad Ali</p>
-                <input type="text" className='popupInputField' disabled value={"2MTEPW14"}/>
+                <p className="popupChildName">{props.approvalModalData.name}</p>
+                <input type="text" className='popupInputField' disabled value={props.approvalModalData.id}/>
                 <div className="popupActionButtonsContainer">
-                    <div className="popupApproveButtonContainer">
-                        <p className="popupActionButtonText" onClick={handleApprove}>
+                    <div className="popupApproveButtonContainer" onClick={handleApprove}>
+                        <p className="popupActionButtonText" >
                             Approve
                         </p>
                     </div>
-                    <div className="popupDeclineButtonContainer">
-                        <p className="popupActionButtonText" onClick={handleDecline}>
+                    <div className="popupDeclineButtonContainer" onClick={handleDecline}>
+                        <p className="popupActionButtonText">
                             Decline
                         </p>
                     </div>

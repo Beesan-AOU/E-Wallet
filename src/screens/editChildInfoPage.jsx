@@ -65,7 +65,7 @@ function EditChildInfoPage() {
   //     "https://upload.wikimedia.org/wikipedia/commons/0/09/Man_Silhouette.png"
   // });
   const { state } = useLocation();
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const [croppedImg, setCroppedImg] = useState("");
   const [diseasesFound, setDiseasesFound] = useState(state.diseasesFound);
   console.log("diseases found = " + diseasesFound);
@@ -708,7 +708,7 @@ Not Needed
             onClick={() => {
               uploadStudentData()
                 .then((res) => {
-                  navigation("/home");
+                  navigate("/home");
                 })
                 .catch((error) => {
                   console.log(error);

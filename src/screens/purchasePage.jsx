@@ -31,8 +31,8 @@ function PurchasePage() {
   const [currentStudent, setCurrentStudent] = useState(state);
   const [errorHeading, setErrorHeading] = useState();
   const [errorMessage, setErrorMessage] = useState();
+  const [approvalModalData, setApprovalModalData] = useState({});
   const navigate = useNavigate();
-  let newStudentData = {}
 
   const fetchStudentData = () => {
     onSnapshot(doc(db, "children", state.id), (doc) => {
@@ -51,9 +51,13 @@ function PurchasePage() {
     if (docSnap.exists()) {
       setApprovalModalShown(true);
       setSearchQuery("");
-      newStudentData = docSnap.data();
+      setApprovalModalData(docSnap.data());
     } else {
-      //add error (student doesnt exist)
+      setErrorMessage("Student Doesn't Exist");
+      setErrorMessageShown(true);
+      setTimeout(() => {
+        setErrorMessageShown(false)
+      }, 5000);
     }
   }
 
@@ -207,7 +211,7 @@ function PurchasePage() {
     <div className="purchasePageContainer">
       {approvalModalShown? (
         <div className="modalContainer">
-            <PopupStudentApprovalPage setApprovalModalShown={setApprovalModalShown} newStudentData={newStudentData}/>
+            <PopupStudentApprovalPage setApprovalModalShown={setApprovalModalShown} approvalModalData={approvalModalData}/>
         </div>
       ) : null
       }
@@ -265,7 +269,7 @@ function PurchasePage() {
           }}
         />
         <div className="searchIconButton" onClick={handleSearch}>
-          <img src={require("../assets/searchIconButton.png")} alt="" className="searchIcon"/>
+          <img src={require("../assets/searchIconButton.png")} alt="" className="purchase-searchIcon"/>
         </div>
       </div>
       <div className="headerContainer">
