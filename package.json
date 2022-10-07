@@ -1,5 +1,6 @@
 {
-  "homepage": "https://beesan-aou.github.io/e-wallet",
+  "proxy": "localhost:3000",
+  "homepage": "https://beesan-aou.github.io/E-Wallet/",
   "name": "kids_e_wallet",
   "version": "0.1.0",
   "private": true,
