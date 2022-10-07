@@ -46,8 +46,12 @@ function StudentApprovalPage() {
       console.log(err);
     })
     console.log("studentID is " + studentID)
+
     if (!(window.localStorage.getItem("isLoggedIn") == "true")) {
         navigate("/");
+    }
+    if (window.localStorage.getItem("accountType") == "parent") {
+      navigate("/home");
     }
 } , [])
   return (

@@ -149,6 +149,12 @@ function EditChildInfoPage() {
     });
   };
   useEffect(() => {
+    if (!(window.localStorage.getItem("isLoggedIn") == "true")) {
+      navigate("/");
+    }
+    if (window.localStorage.getItem("accountType") == "school") {
+      navigate("/search");
+    }
     fetchStudentData()
       .then((val) => {
         setCurrentStudent(val);

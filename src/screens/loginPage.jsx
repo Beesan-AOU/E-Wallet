@@ -28,6 +28,7 @@ function LoginScreen() {
             //user data exists therefore we have to check the user type and navigate to the appropriate screen\
             if (docSnap.data().userType == state.loginType) {
               window.localStorage.setItem("isLoggedIn", true)
+              window.localStorage.setItem("accountType", state.loginType)
               if (state.loginType == "parent") {
                 navigate("/home");
               }

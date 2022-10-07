@@ -16,6 +16,9 @@ function StudentSearchPage() {
         if (!(window.localStorage.getItem("isLoggedIn") == "true")) {
             navigate("/");
         }
+        if (window.localStorage.getItem("accountType") == "parent") {
+            navigate("/home");
+        }
     } , [])
 
 
