@@ -3,7 +3,7 @@
   "homepage": "https://beesan-aou.github.io/E-Wallet/",
   "name": "kids_e_wallet",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

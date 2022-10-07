@@ -42,10 +42,10 @@ export const storage = getStorage();
 
 function App() {
   return (
-    <Router>
+    <Router basename="/E-Wallet">
       <div className="App">
-        <HashRouter>
-          <Route path="/" element={<LandingPage />} />
+        <Routes>
+          <Route path="/E-Wallet" element={<LandingPage />} />
           <Route path="/choice" element={<UserChoicePage />} />
 
           <Route path="/home" element={<ParentHomePage />} />
@@ -62,7 +62,7 @@ function App() {
 
           <Route path="/purchase" element={<PurchasePage />} />
 
-        </HashRouter>
+        </Routes>
 
       </div>
     </Router>
