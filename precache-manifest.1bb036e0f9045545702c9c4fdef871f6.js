@@ -1,27 +1,27 @@
 self.__precacheManifest = [
   {
-    "revision": "24a2739f34d3a1a3cd24",
-    "url": "/E-Wallet/static/css/main.f25cb428.chunk.css"
+    "revision": "49d410a89d92a1b45d9f",
+    "url": "/E-Wallet/static/css/main.5aa31a11.chunk.css"
   },
   {
-    "revision": "24a2739f34d3a1a3cd24",
-    "url": "/E-Wallet/static/js/main.24a2739f.chunk.js"
+    "revision": "49d410a89d92a1b45d9f",
+    "url": "/E-Wallet/static/js/main.49d410a8.chunk.js"
   },
   {
-    "revision": "083a92f3bb60d465e079",
-    "url": "/E-Wallet/static/js/1.083a92f3.chunk.js"
+    "revision": "ed96c534b8ddb2b7ca90",
+    "url": "/E-Wallet/static/js/1.ed96c534.chunk.js"
   },
   {
-    "revision": "b1ddbce7a1c1ad97ac82",
-    "url": "/E-Wallet/static/css/2.f100d079.chunk.css"
+    "revision": "ae9a0772fc4c175a739b",
+    "url": "/E-Wallet/static/css/2.0f794874.chunk.css"
   },
   {
-    "revision": "b1ddbce7a1c1ad97ac82",
-    "url": "/E-Wallet/static/js/2.b1ddbce7.chunk.js"
+    "revision": "ae9a0772fc4c175a739b",
+    "url": "/E-Wallet/static/js/2.ae9a0772.chunk.js"
   },
   {
-    "revision": "fdcb83065a0d4c477634",
-    "url": "/E-Wallet/static/js/runtime~main.fdcb8306.js"
+    "revision": "74833cce6af070293fc2",
+    "url": "/E-Wallet/static/js/runtime~main.74833cce.js"
   },
   {
     "revision": "84d9b6c866d51466b2091d45b8b1139f",
@@ -30,10 +30,6 @@ self.__precacheManifest = [
   {
     "revision": "a7f53b21e7902e7d0fb06fb58f131b9b",
     "url": "/E-Wallet/static/media/default-girl-image.a7f53b21.png"
-  },
-  {
-    "revision": "06e733283fa43d1dd57738cfc409adbd",
-    "url": "/E-Wallet/static/media/logo.06e73328.svg"
   },
   {
     "revision": "9fb897254341cb38e7f9bac3b93d6bb6",
@@ -96,7 +92,7 @@ self.__precacheManifest = [
     "url": "/E-Wallet/static/media/popupSearchApprpvalPageLeftBgPart.17f0097e.png"
   },
   {
-    "revision": "c715a8d18fdb19428a83ed5606c4b96f",
+    "revision": "6a90f5026aa935c5abc5688e0bbfeb2d",
     "url": "/E-Wallet/index.html"
   }
 ];
