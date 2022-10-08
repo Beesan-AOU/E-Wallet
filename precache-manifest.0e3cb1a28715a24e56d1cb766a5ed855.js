@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "a90e33f04fec942f3573",
-    "url": "/E-Wallet/static/css/main.04065225.chunk.css"
+    "revision": "a643714d1dad7aa6cbac",
+    "url": "/E-Wallet/static/css/main.8a6b5d27.chunk.css"
   },
   {
-    "revision": "a90e33f04fec942f3573",
-    "url": "/E-Wallet/static/js/main.a90e33f0.chunk.js"
+    "revision": "a643714d1dad7aa6cbac",
+    "url": "/E-Wallet/static/js/main.a643714d.chunk.js"
   },
   {
     "revision": "ed96c534b8ddb2b7ca90",
@@ -92,7 +92,7 @@ self.__precacheManifest = [
     "url": "/E-Wallet/static/media/popupSearchApprpvalPageLeftBgPart.17f0097e.png"
   },
   {
-    "revision": "cf3d77ebdc12b8ad2d147ca6ac20ecdc",
+    "revision": "5d58b29c3e22b48849ce61d3ce0a5c9f",
     "url": "/E-Wallet/index.html"
   }
 ];
