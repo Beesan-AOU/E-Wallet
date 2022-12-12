@@ -1,27 +1,27 @@
 self.__precacheManifest = [
   {
-    "revision": "a643714d1dad7aa6cbac",
-    "url": "/E-Wallet/static/css/main.8a6b5d27.chunk.css"
+    "revision": "8cd593becaa9ef184178",
+    "url": "/E-Wallet/static/css/main.35c561ea.chunk.css"
   },
   {
-    "revision": "a643714d1dad7aa6cbac",
-    "url": "/E-Wallet/static/js/main.a643714d.chunk.js"
+    "revision": "8cd593becaa9ef184178",
+    "url": "/E-Wallet/static/js/main.8cd593be.chunk.js"
   },
   {
-    "revision": "ed96c534b8ddb2b7ca90",
-    "url": "/E-Wallet/static/js/1.ed96c534.chunk.js"
+    "revision": "083a92f3bb60d465e079",
+    "url": "/E-Wallet/static/js/1.083a92f3.chunk.js"
   },
   {
-    "revision": "d49eb5be56382cc00625",
-    "url": "/E-Wallet/static/css/2.0f794874.chunk.css"
+    "revision": "c40eaec4a50658c07fa7",
+    "url": "/E-Wallet/static/css/2.f100d079.chunk.css"
   },
   {
-    "revision": "d49eb5be56382cc00625",
-    "url": "/E-Wallet/static/js/2.d49eb5be.chunk.js"
+    "revision": "c40eaec4a50658c07fa7",
+    "url": "/E-Wallet/static/js/2.c40eaec4.chunk.js"
   },
   {
-    "revision": "74833cce6af070293fc2",
-    "url": "/E-Wallet/static/js/runtime~main.74833cce.js"
+    "revision": "fdcb83065a0d4c477634",
+    "url": "/E-Wallet/static/js/runtime~main.fdcb8306.js"
   },
   {
     "revision": "84d9b6c866d51466b2091d45b8b1139f",
@@ -92,7 +92,7 @@ self.__precacheManifest = [
     "url": "/E-Wallet/static/media/popupSearchApprpvalPageLeftBgPart.17f0097e.png"
   },
   {
-    "revision": "5d58b29c3e22b48849ce61d3ce0a5c9f",
+    "revision": "d3589f94ba2d176e01a3820a80a95d98",
     "url": "/E-Wallet/index.html"
   }
 ];
